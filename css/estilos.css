@@ -1,0 +1,1398 @@
+/* Cabinet Grotesk de Fontshare (licencia gratuita), guardada en el proyecto */
+@font-face { font-family: "Cabinet Grotesk"; src: url("../fuentes/cabinet-grotesk-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Cabinet Grotesk"; src: url("../fuentes/cabinet-grotesk-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Cabinet Grotesk"; src: url("../fuentes/cabinet-grotesk-800.woff2") format("woff2"); font-weight: 800; font-style: normal; font-display: swap; }
+
+/* Ronova Studio — blanco, negro fuerte y morado. */
+:root {
+  --negro: #000;
+  --blanco: #fff;
+  --morado: #6d28d9;
+  --morado-oscuro: #4c1d95;
+  --morado-claro: #8b5cf6; /* solo para el logo sobre negro, como pide el kit */
+  --gris: #b8b8b8;
+
+  --step-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --step-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --step-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --step-head: clamp(2.5rem, 1.2rem + 5vw, 5.5rem);
+
+  --margen: clamp(20px, 2.2vw, 40px);
+  --curva: cubic-bezier(0.22, 1, 0.36, 1);
+  --fuente: "Cabinet Grotesk", "Helvetica Neue", Arial, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--fuente);
+  font-size: var(--step-body);
+  line-height: 1.5;
+  color: var(--negro);
+  background: var(--negro);
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; height: auto; }
+h1, h2, h3, p, ol, ul, figure { margin: 0; }
+ol, ul { padding: 0; list-style: none; }
+a { color: inherit; }
+button, input, select { font: inherit; color: inherit; }
+.saltar {
+  position: fixed; left: var(--margen); top: -100px; z-index: 50;
+  padding: 12px 18px; background: var(--blanco); font-weight: 800;
+}
+.saltar:focus { top: var(--margen); }
+:focus-visible { outline: 3px solid var(--morado-claro); outline-offset: 3px; }
+
+/* ---------- Títulos y botones ---------- */
+.titulo {
+  font-size: var(--step-head);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.035em;
+}
+.boton {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 56px; padding: 0 28px;
+  font-size: var(--step-body); font-weight: 800; letter-spacing: -0.01em;
+  text-decoration: none; border: 0; border-radius: 999px; cursor: pointer;
+  transition: transform 160ms var(--curva), background-color 200ms var(--curva), color 200ms var(--curva), translate 400ms var(--curva);
+}
+.boton:active { transform: scale(0.97); }
+.boton--morado { background: var(--morado); color: var(--blanco); }
+.boton--blanco { background: var(--blanco); color: var(--negro); }
+@media (hover: hover) {
+  .boton--morado:hover { background: var(--blanco); color: var(--negro); }
+  .boton--blanco:hover { background: var(--negro); color: var(--blanco); }
+}
+
+/* ---------- Barra superior: el símbolo a la izquierda, sonido y menú a la derecha ---------- */
+.barra {
+  position: fixed; z-index: 45; inset: var(--margen) var(--margen) auto;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  pointer-events: none;
+}
+.barra > * { pointer-events: auto; }
+/* Cuando la sesión se desliza por dentro, una franja de su color tapa lo que pasa por debajo. */
+.barra::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: calc(var(--margen) * 2 + 52px); z-index: -1;
+  background: var(--franja, var(--negro)); opacity: 0; transition: opacity 300ms var(--curva);
+}
+.desplazado .barra::before { opacity: 1; }
+[data-tono="morado"] { --franja: var(--morado); }
+[data-tono="claro"] { --franja: var(--blanco); }
+[data-tono="oscuro"] { --franja: var(--negro); }
+.barra__marca {
+  display: grid; width: 52px; height: 52px; align-items: center;
+  transition: translate 400ms var(--curva);
+}
+.barra__marca .logo { grid-area: 1 / 1; width: 46px; opacity: 0; transition: opacity 500ms var(--curva), scale 400ms var(--curva); }
+.barra__marca:hover .logo { scale: 1.08; }
+[data-tono="morado"] .logo--morado,
+[data-tono="claro"] .logo--claro,
+[data-tono="oscuro"] .logo--oscuro { opacity: 1; }
+.barra__der { display: flex; gap: 6px; }
+.barra__menu, .barra__sonido {
+  display: inline-flex; align-items: center; gap: 10px; height: 52px; padding: 0 22px;
+  border: 0; border-radius: 999px; background: var(--negro); color: var(--blanco); cursor: pointer;
+  font-size: var(--step-small); font-weight: 800; letter-spacing: 0.02em;
+  transition: translate 400ms var(--curva), background-color 200ms, color 200ms;
+}
+.barra__menu { min-width: 92px; justify-content: center; }
+/* Selector de idioma: una cápsula negra que se abre a lo ancho en la misma barra y desliza una pastilla morada (js/app.js). */
+.idioma {
+  --activo: 0;
+  display: inline-flex; align-items: center; height: 52px; padding: 5px;
+  border-radius: 999px; background: var(--negro); color: var(--blanco); overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  transition: translate 400ms var(--curva), background-color 200ms, box-shadow 250ms var(--curva);
+}
+.idioma:has([data-idioma="en"][aria-current]) { --activo: 1; }
+.idioma:has([data-idioma="ja"][aria-current]) { --activo: 2; }
+.idioma--abierto { box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.45), 0 14px 32px rgba(0, 0, 0, 0.45); }
+.idioma__boton {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 42px; padding: 0 15px;
+  border: 0; border-radius: 999px; background: transparent; color: var(--blanco); cursor: pointer;
+  font-size: var(--step-small); font-weight: 800; letter-spacing: 0.05em;
+  transition: padding 260ms var(--curva), gap 260ms var(--curva), color 200ms;
+}
+.idioma__icono { width: 17px; height: 17px; flex: none; color: var(--morado-claro); transition: rotate 360ms var(--curva), color 200ms; }
+.idioma__actual {
+  display: inline-block; max-width: 28px; overflow: hidden; white-space: nowrap;
+  transition: max-width 240ms var(--curva), opacity 180ms var(--curva);
+}
+.idioma--abierto .idioma__boton { padding: 0 11px; gap: 0; }
+.idioma--abierto .idioma__icono { rotate: 90deg; }
+.idioma--abierto .idioma__actual { max-width: 0; opacity: 0; }
+.idioma__menu {
+  position: relative; display: grid; grid-template-columns: repeat(3, 44px); align-items: center;
+  height: 42px; max-width: 0; opacity: 0; overflow: hidden; pointer-events: none;
+  transition: max-width 300ms var(--curva), opacity 200ms var(--curva);
+}
+.idioma--abierto .idioma__menu { max-width: 132px; opacity: 1; pointer-events: auto; }
+.idioma__menu:has([data-idioma="es"]:is(:hover, :focus-visible)) { --pos: 0; }
+.idioma__menu:has([data-idioma="en"]:is(:hover, :focus-visible)) { --pos: 1; }
+.idioma__menu:has([data-idioma="ja"]:is(:hover, :focus-visible)) { --pos: 2; }
+.idioma__menu::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: calc(100% / 3); border-radius: 999px;
+  background: var(--morado); box-shadow: 0 0 16px rgba(139, 92, 246, 0.5);
+  transform: translate3d(calc(var(--pos, var(--activo, 0)) * 100%), 0, 0);
+  transition: transform 260ms var(--curva); pointer-events: none;
+}
+.idioma__menu li { height: 100%; }
+.idioma__menu a {
+  position: relative; z-index: 1; display: grid; place-items: center; width: 44px; height: 42px; border-radius: 999px;
+  color: rgba(255, 255, 255, 0.62); text-decoration: none; font-size: 13px; font-weight: 800; letter-spacing: 0.06em;
+  transition: color 180ms;
+}
+.idioma__menu a:is([aria-current], :hover, :focus-visible) { color: var(--blanco); }
+.idioma__menu a:focus-visible { outline: 2px solid var(--morado-claro); outline-offset: -2px; }
+@media (hover: hover) {
+  .idioma:not(.idioma--abierto):hover { background: var(--morado); }
+  .idioma:not(.idioma--abierto):hover .idioma__icono { color: var(--blanco); }
+}
+.barra__whatsapp {
+  display: inline-flex; align-items: center; gap: 9px; height: 52px; padding: 0 20px 0 16px;
+  border-radius: 999px; background: var(--morado); color: var(--blanco); text-decoration: none;
+  font-size: var(--step-small); font-weight: 800; letter-spacing: 0.02em;
+  transition: translate 400ms var(--curva), background-color 200ms, color 200ms;
+}
+.barra__whatsapp svg { width: 20px; height: 20px; flex: none; }
+.barra__whatsapp:hover { background: var(--blanco); color: var(--negro); }
+/* Sobre fondo morado, el botón de WhatsApp va en blanco para que no se pierda */
+[data-tono="morado"] .barra__whatsapp { background: var(--blanco); color: var(--negro); }
+[data-tono="morado"] .barra__whatsapp:hover { background: var(--negro); color: var(--blanco); }
+.barra__menu:hover, .barra__sonido:hover { background: var(--morado); }
+.menu-abierto .barra__menu { background: var(--blanco); color: var(--negro); }
+.ecualizador { display: flex; align-items: flex-end; gap: 2px; height: 14px; }
+.ecualizador i { width: 3px; height: 14px; background: var(--morado-claro); transform: scaleY(0.22); transform-origin: bottom; transition: transform 300ms var(--curva); }
+.sonando .ecualizador i { animation: barra-eq 900ms ease-in-out infinite alternate; }
+.sonando .ecualizador i:nth-child(2) { animation-delay: -300ms; animation-duration: 700ms; }
+.sonando .ecualizador i:nth-child(3) { animation-delay: -600ms; animation-duration: 1100ms; }
+.sonando .ecualizador i:nth-child(4) { animation-delay: -150ms; animation-duration: 800ms; }
+/* scaleY en vez de height: no obliga a recalcular el diseño de la página */
+@keyframes barra-eq { from { transform: scaleY(0.22); } to { transform: scaleY(1); } }
+
+/* ---------- Menú a pantalla completa: el logo encendido y un índice legible ---------- */
+.menu {
+  position: fixed; inset: 0; z-index: 44; overflow-y: auto;
+  display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr); gap: clamp(32px, 5vw, 96px); align-items: center;
+  padding: calc(var(--margen) + 76px) var(--margen) var(--margen);
+  background: var(--negro); color: var(--blanco);
+}
+.menu[hidden] { display: none; }
+.menu__lado { display: grid; gap: 20px; justify-items: start; max-width: 380px; }
+.menu__logo { width: min(100%, 300px); height: auto; filter: drop-shadow(0 0 18px rgba(139, 92, 246, 0.5)); }
+.menu__lado p { color: rgba(255, 255, 255, 0.78); }
+.menu__reloj { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+.menu__reloj b { color: var(--blanco); font-weight: 800; font-variant-numeric: tabular-nums; }
+/* La red de neuronas: los nodos los ubica js/experiencia.js */
+.menu__red { position: relative; align-self: stretch; min-height: 420px; }
+.menu__conexiones { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.menu__conexiones .conexion { fill: none; stroke: rgba(139, 92, 246, 0.14); stroke-width: 1; stroke-dasharray: 3 6; transition: stroke 300ms, stroke-width 300ms; }
+/* El camino de la página, de la 1 a la 10: se ve claro y los pulsos viajan en ese orden */
+.menu__conexiones .conexion.camino { stroke: rgba(139, 92, 246, 0.6); stroke-width: 1.8; stroke-dasharray: none; }
+.menu__conexiones .conexion.viva { stroke: var(--morado-claro); stroke-width: 2; }
+.menu__conexiones .pulso { fill: var(--morado-claro); }
+.menu__conexiones .pulso.viva { fill: var(--blanco); }
+.menu__nav { position: absolute; inset: 0; }
+.menu__nav a {
+  position: absolute; left: 0; top: 0; display: grid; justify-items: center; gap: 6px; width: 150px; margin-left: -75px; margin-top: -24px;
+  color: var(--blanco); text-decoration: none; text-align: center; will-change: transform;
+}
+.menu__num {
+  display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%;
+  background: #120d1d; color: var(--morado-claro); font-size: 17px; font-weight: 800;
+  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.5), 0 0 18px rgba(139, 92, 246, 0.25);
+  transition: background-color 250ms, color 250ms, box-shadow 300ms, scale 300ms var(--curva);
+}
+.menu__nombre { font-size: 15px; font-weight: 800; line-height: 1.15; white-space: nowrap; }
+.menu__nombre small { margin-right: 2px; color: var(--morado-claro); font-size: 12px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.menu__desc {
+  max-width: 150px; color: rgba(255, 255, 255, 0.6); font-size: 13px; line-height: 1.3;
+  opacity: 0; translate: 0 -4px; transition: opacity 250ms, translate 300ms var(--curva);
+}
+.menu__nav a:hover .menu__num, .menu__nav a:focus-visible .menu__num, .menu__nav a.encendida .menu__num {
+  background: var(--morado); color: var(--blanco); scale: 1.12;
+  box-shadow: 0 0 0 1px var(--morado-claro), 0 0 30px rgba(139, 92, 246, 0.8);
+}
+.menu__nav a:hover .menu__desc, .menu__nav a:focus-visible .menu__desc, .menu__nav a.encendida .menu__desc { opacity: 1; translate: 0 0; }
+.menu__nav a:focus-visible { outline: none; }
+/* Donde estás ahora */
+.menu__nav a[aria-current] .menu__num { background: var(--blanco); color: var(--negro); box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.15), 0 0 26px rgba(255, 255, 255, 0.35); }
+.menu__nav a[aria-current] .menu__nombre::after { content: " · aquí"; color: var(--morado-claro); font-weight: 500; }
+:lang(en) .menu__nav a[aria-current] .menu__nombre::after { content: " · here"; }
+:lang(ja) .menu__nav a[aria-current] .menu__nombre::after { content: " · 現在地"; }
+/* El logo se enciende como neón al abrir */
+.menu-abierto .menu__logo { animation: logo-enciende 1.4s 0.35s steps(1, end) both; }
+.menu-abierto body { overflow: hidden; }
+
+/* ---------- Sesiones (modo apilado, el de celular y sin JS) ---------- */
+.sesion {
+  position: relative; isolation: isolate;
+  min-height: 100svh;
+  overflow: hidden;
+  /* Arriba: lo justo para no chocar con la barra (52px de alto) */
+  padding: calc(var(--margen) + 76px) var(--margen) var(--margen);
+}
+
+/* ---------- Escenas: video de Tokio detrás de cada sesión ---------- */
+.escena { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.escena video {
+  position: absolute; left: -6%; top: -6%; width: 112%; height: 112%; object-fit: cover;
+  /* --ex/--ey: paralaje al viajar (js/mundo.js); --mx/--my: el mouse (js/experiencia.js) */
+  transform: translate3d(calc(var(--ex, 0px) + var(--mx, 0) * -16px), calc(var(--ey, 0px) + var(--my, 0) * -12px), 0);
+  will-change: transform;
+}
+.escena::after { content: ""; position: absolute; inset: 0; }
+/* Moradas: duotono, los neones quedan en morado y blanco */
+[data-tono="morado"] > .escena video { filter: grayscale(1) contrast(1.2) brightness(1.05); }
+[data-tono="morado"] > .escena::after { background: var(--morado); mix-blend-mode: multiply; }
+/* El verificador lleva mucho texto: su código de fondo va más apagado */
+#verificador > .escena video { filter: grayscale(1) contrast(1.1) brightness(0.62); }
+/* Negras: a color, oscurecidas, para que el texto blanco se lea */
+[data-tono="oscuro"] > .escena video { filter: brightness(0.36) saturate(1.15); }
+/* Claras: casi una marca de agua */
+[data-tono="claro"] > .escena video { filter: grayscale(1) contrast(1.1); }
+[data-tono="claro"] > .escena::after { background: rgba(255, 255, 255, 0.86); }
+
+/* Código vivo: el código real de esta página subiendo despacio */
+.escena--codigo::after { display: none; }
+.codigo-vivo {
+  position: absolute; left: 0; right: 0; top: 0; margin: 0; padding: 0 var(--margen);
+  font: 500 clamp(12px, 0.95vw, 15px) / 1.7 ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+  color: rgba(0, 0, 0, 0.1); white-space: pre; overflow: hidden;
+  animation: codigo-sube var(--duracion, 120s) linear infinite;
+}
+.codigo-vivo b { font-weight: 700; color: rgba(109, 40, 217, 0.26); }
+.codigo-vivo s { text-decoration: none; color: rgba(0, 0, 0, 0.18); }
+.codigo-vivo i { color: rgba(109, 40, 217, 0.2); }
+@keyframes codigo-sube { to { transform: translateY(-50%); } }
+
+/* ---------- 1 · Inicio ---------- */
+.sesion--inicio { background: var(--negro); color: var(--blanco); padding: 0; }
+.inicio__campo { position: absolute; inset: 0 0 18% 0; }
+.inicio__titulo {
+  position: absolute; left: var(--margen); top: 16%;
+  font-size: clamp(56px, min(7.2vw, 15vh), 130px);
+  font-weight: 800; line-height: 0.88; letter-spacing: -0.035em;
+}
+.inicio__vertical {
+  position: absolute; right: var(--margen); top: calc(var(--margen) + 84px);
+  writing-mode: vertical-rl;
+  font-size: var(--step-small); letter-spacing: 0.4em;
+}
+.inicio__foto {
+  position: absolute; z-index: 2;
+  right: 22%; bottom: 7%;
+  width: min(25vw, 48vh); aspect-ratio: 3 / 4;
+  transform: rotate(5deg);
+  border-radius: 999px 999px 0 0; overflow: hidden;
+  background: var(--negro);
+}
+.inicio__foto img, .inicio__foto video { width: 100%; height: 100%; object-fit: cover; }
+.inicio__banda {
+  position: absolute; inset: auto 0 0 0; height: 18%; background: var(--negro);
+  display: flex; align-items: center; justify-content: space-between; gap: 32px;
+  padding: 0 var(--margen);
+}
+.inicio__banda p { max-width: 46ch; font-size: var(--step-body); }
+/* Pantallas anchas y bajitas: el arco a la derecha y más arriba, sin tapar la frase ni el botón */
+@media (min-aspect-ratio: 16/9) and (min-width: 1024px) {
+  .inicio__foto { right: 4%; bottom: 21%; width: min(22vw, 40vh); }
+}
+
+/* ---------- 5 · Páginas web: cartas coleccionables ---------- */
+.sesion--trabajo {
+  display: grid; grid-template-columns: minmax(0, 0.6fr) minmax(0, 1.4fr); gap: clamp(24px, 4vw, 72px);
+  align-items: center; background: var(--negro); color: var(--blanco);
+}
+.trabajo__lista { display: grid; gap: clamp(12px, 2.2vh, 22px); align-content: center; }
+.trabajo__lista .titulo { font-size: clamp(36px, min(4.6vw, 8vh), 80px); }
+.trabajo__lead { max-width: 34ch; color: rgba(255, 255, 255, 0.72); }
+.trabajo__coleccion { color: rgba(255, 255, 255, 0.55); font-size: var(--step-small); }
+.trabajo__coleccion b { color: var(--morado-claro); }
+.trabajo__boton { justify-self: start; }
+.trabajo__boton span, .carta__accion span { display: inline-block; margin-left: 8px; transition: transform 300ms var(--curva); }
+@media (hover: hover) { .trabajo__boton:hover span, .carta__accion:hover span { transform: translateX(5px); } }
+
+.cartas {
+  --alto-carta: min(calc(100vh - 230px), 520px);
+  display: flex; align-items: center; gap: clamp(14px, 2vw, 30px);
+  margin: 0; padding: 24px 12px; list-style: none;
+  overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none;
+  scroll-padding-inline: 12px; /* al encajar, la carta respeta el margen */
+}
+.cartas::-webkit-scrollbar { display: none; }
+.cartas > .carta { flex: none; scroll-snap-align: start; }
+/* Si caben todas, se centran */
+/* Si hay más cartas de las que caben, el borde se desvanece: se nota que hay más */
+.cartas.desborda { -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
+.cartas:not(.desborda) > .carta:first-child { margin-left: auto; }
+.cartas:not(.desborda) > .carta:last-child { margin-right: auto; }
+.carta { position: relative; display: grid; justify-items: center; gap: 12px; perspective: 1200px; }
+/* La carta entera: se inclina con el mouse (--rx, --ry) y se voltea al tocarla */
+.carta__giro {
+  position: relative; display: block; height: var(--alto-carta); aspect-ratio: 63 / 88; padding: 0; border: 0;
+  background: none; color: var(--blanco); cursor: pointer; text-align: left;
+  /* Solo la inclinación con el mouse es 3D. El volteo es 2D (js/app.js): la carta se aplana,
+     cambia de cara y se abre. Así se ve igual en cualquier navegador y tarjeta gráfica. */
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 500ms var(--curva);
+}
+.carta.moviendo:not(.girando) .carta__giro { transition: transform 120ms linear; }
+.carta__cara {
+  position: absolute; inset: 0; display: flex; flex-direction: column; gap: 8px; overflow: hidden;
+  padding: 12px; border-radius: 18px;
+  /* Marco plateado con un toque morado */
+  background: linear-gradient(150deg, #2a2140, #120d1d 45%, #1d1530);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.18), inset 0 0 0 6px #0c0913, inset 0 0 0 7px rgba(139, 92, 246, 0.5), 0 20px 50px rgba(0, 0, 0, 0.55);
+}
+.carta__reverso { visibility: hidden; }
+.carta.volteada .carta__frente { visibility: hidden; }
+.carta.volteada .carta__reverso { visibility: visible; }
+.carta__cabeza { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 8px 0; }
+.carta__cabeza b { font-size: clamp(14px, 1.15vw, 18px); font-weight: 800; letter-spacing: -0.01em; }
+.carta__kanji {
+  display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%;
+  background: var(--morado); font-size: 15px; font-weight: 800; box-shadow: 0 0 14px rgba(139, 92, 246, 0.7);
+}
+.carta__arte { position: relative; flex: 1; min-height: 0; overflow: hidden; border-radius: 10px; box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.14); }
+.carta__arte img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.carta__tipo {
+  padding: 5px 8px; border-radius: 8px; background: rgba(255, 255, 255, 0.07);
+  font-size: 11px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: #c4b5fd;
+}
+.carta__texto { padding: 0 6px; font-size: 12.5px; line-height: 1.4; color: rgba(255, 255, 255, 0.8); }
+.carta__pie {
+  display: flex; justify-content: space-between; padding: 0 6px 2px;
+  font: 700 11px/1 ui-monospace, Menlo, Consolas, monospace; letter-spacing: 0.05em; color: rgba(255, 255, 255, 0.6);
+}
+/* El brillo holográfico: se mueve con la luz (--px, --py) */
+.carta__holo {
+  position: absolute; inset: 0; pointer-events: none; border-radius: inherit; mix-blend-mode: color-dodge; opacity: 0.55;
+  background:
+    radial-gradient(circle at var(--px, 50%) var(--py, 30%), rgba(255, 255, 255, 0.55), transparent 42%),
+    linear-gradient(115deg, transparent 20%, rgba(139, 92, 246, 0.55) 35%, rgba(120, 220, 255, 0.4) 45%, rgba(255, 170, 230, 0.4) 55%, transparent 70%);
+  background-size: 100% 100%, 260% 260%;
+  background-position: center, var(--px, 50%) var(--py, 50%);
+  transition: opacity 300ms;
+}
+.carta:hover .carta__holo { opacity: 0.85; }
+/* Por detrás no hay arcoíris: se apaga al voltear */
+.carta.volteada .carta__holo, .carta.volteada:hover .carta__holo { opacity: 0; }
+/* Detrás: la web bajando dentro de la carta */
+.carta__pantalla { position: relative; flex: 1; overflow: hidden; border-radius: 12px; background: #1d1530; }
+.carta__pantalla img { width: 100%; height: auto; will-change: transform; }
+.carta__volver { align-self: center; font-size: 11px; font-weight: 800; letter-spacing: 0.06em; color: rgba(255, 255, 255, 0.55); }
+/* El dorso de Ronova (la carta por descubrir) */
+.carta__reverso--tuya { justify-content: space-between; }
+.carta__invitacion { padding: 0 10px; font-size: clamp(16px, 1.4vw, 22px); font-weight: 500; line-height: 1.3; text-align: center; }
+.carta__invitacion b { color: var(--morado-claro); }
+/* La mini página de ejemplo de "la tuya" */
+.mini { display: flex; flex-direction: column; gap: 8%; padding: 8% 9%; background: linear-gradient(160deg, #f6f0ff, #e7dcff); }
+.mini i { display: block; border-radius: 99px; background: rgba(76, 29, 149, 0.22); }
+.mini__nav { display: flex; align-items: center; gap: 6%; }
+.mini__nav i { width: 14%; height: 5px; }
+.mini__nav .mini__logo { width: 13px; height: 13px; border-radius: 4px; background: var(--morado); margin-right: auto; }
+.mini__hero { display: grid; gap: 8px; justify-items: start; }
+.mini__titulo { font-size: clamp(22px, 2.2vw, 34px); font-weight: 800; line-height: 1; letter-spacing: -0.04em; color: #1d1033; }
+.mini__lineas { display: grid; gap: 5px; width: 100%; }
+.mini__lineas i { height: 5px; }
+.mini__lineas i:last-child { width: 70%; }
+.mini__boton { padding: 5px 11px; border-radius: 99px; background: var(--morado); color: var(--blanco); font-size: 10px; font-weight: 800; }
+.mini__bloques { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-top: auto; }
+.mini__bloques i { height: 34px; border-radius: 8px; background: rgba(109, 40, 217, 0.18); }
+.mini__bloques i:nth-child(2) { background: rgba(109, 40, 217, 0.35); }
+/* Flechas: solo aparecen si hay más cartas de las que caben */
+.cartas__flechas { display: flex; gap: 8px; }
+.cartas__flechas[hidden] { display: none; }
+.cartas__flecha {
+  width: 46px; height: 46px; border: 0; border-radius: 50%; cursor: pointer;
+  background: rgba(255, 255, 255, 0.08); color: var(--blanco); font-size: 18px; font-weight: 800;
+  transition: background-color 200ms, scale 200ms var(--curva);
+}
+.cartas__flecha:hover { background: var(--morado); }
+.cartas__flecha:active { scale: 0.92; }
+.cartas__flecha:disabled { opacity: 0.3; cursor: default; background: rgba(255, 255, 255, 0.08); }
+.carta__accion { min-height: 40px; padding: 0 18px; font-size: var(--step-small); opacity: 0; translate: 0 -6px; transition: opacity 300ms, translate 400ms var(--curva); }
+.carta--tuya.volteada .carta__accion { opacity: 1; translate: 0 0; }
+
+/* Del más barato al más caro: morado clarito, morado, morado oscuro, negro */
+
+/* ---------- 6 · Verificador: el torniquete de una estación de Tokio (改札) ---------- */
+.sesion--verificador {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr); gap: clamp(24px, 4vw, 72px); align-items: center;
+  background: var(--morado); color: var(--blanco);
+}
+.verificador__texto { display: grid; gap: clamp(10px, 2vh, 20px); }
+/* Letrero de estación de Tokio: placa blanca, kanji arriba, estaciones vecinas abajo */
+.estacion {
+  display: grid; justify-items: center; gap: 2px; max-width: 560px; padding: 12px 18px 0; border-radius: 14px; overflow: hidden;
+  background: var(--blanco); color: var(--negro); text-align: center; box-shadow: 0 14px 34px rgba(30, 6, 70, 0.4);
+}
+.estacion__kanji { font-size: clamp(13px, 1.1vw, 16px); font-weight: 800; letter-spacing: 0.5em; color: var(--morado); }
+.estacion__nombre { margin: 0; font-size: clamp(28px, min(3.4vw, 6.4vh), 54px); font-weight: 800; line-height: 1; letter-spacing: -0.035em; }
+.estacion__linea {
+  display: grid; place-items: center; width: calc(100% + 36px); margin-top: 10px; padding: 6px 14px;
+  background: var(--morado-oscuro);
+}
+.estacion__linea b { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--blanco); color: var(--morado-oscuro); box-shadow: inset 0 0 0 3px var(--morado-claro); }
+.verificador__lead { max-width: 52ch; font-size: clamp(14px, min(1.1vw, 2.2vh), 17px); line-height: 1.5; color: rgba(255, 255, 255, 0.9); }
+.verificador__lead::first-line { font-weight: 800; }
+.verificador__clave { display: flex; align-items: center; gap: 8px; width: fit-content; margin-top: 8px; padding: 7px 14px 7px 8px; border-radius: 999px; background: rgba(0, 0, 0, 0.25); font-weight: 800; color: var(--blanco); }
+.verificador__clave::before { content: "✓"; display: grid; place-items: center; flex: none; width: 22px; height: 22px; border-radius: 50%; background: #4ade80; color: #04140a; font-size: 13px; }
+/* Los bancos: ficha blanca con su logo real y una franja de su color */
+.bancos { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; max-width: 560px; }
+.banco {
+  position: relative; display: grid; align-content: center; gap: 4px; min-height: 52px; padding: 8px 24px 8px 12px;
+  border-radius: 14px; background: var(--blanco); color: var(--negro); overflow: hidden;
+  transition: translate 300ms var(--curva), box-shadow 300ms var(--curva);
+}
+/* El color del banco: un punto en la esquina */
+.banco::before { content: ""; position: absolute; right: 10px; top: 10px; width: 9px; height: 9px; border-radius: 50%; background: var(--c); }
+.banco__logo { display: flex; align-items: center; gap: 6px; height: 24px; }
+.banco__logo img { height: 100%; width: auto; max-width: 100%; object-fit: contain; object-position: left; }
+.banco__nombre { font-weight: 800; font-size: 14px; color: #1e2026; }
+.banco small { font-size: 11px; font-weight: 800; letter-spacing: 0.02em; color: #6b6478; }
+.banco:not(.banco--activo) .banco__logo { filter: grayscale(0.3); opacity: 0.9; transition: filter 300ms, opacity 300ms; }
+@media (hover: hover) {
+  .banco:hover { translate: 0 -2px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); }
+  .banco:hover .banco__logo { filter: none; opacity: 1; }
+}
+.banco--activo { box-shadow: 0 0 0 3px var(--c), 0 0 24px color-mix(in srgb, var(--c) 45%, transparent); }
+.banco--activo small { display: inline-flex; align-items: center; gap: 5px; color: #15803d; }
+.banco--activo small::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 6px #22c55e; }
+.canales { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: var(--step-small); color: rgba(255, 255, 255, 0.85); }
+.canales span { padding: 4px 10px; border-radius: 999px; background: var(--negro); color: var(--blanco); font-weight: 800; }
+.canales .canales__pronto { background: rgba(0, 0, 0, 0.2); color: rgba(255, 255, 255, 0.7); font-weight: 500; }
+
+/* El torniquete */
+.torniquete {
+  --ok: #4ade80; --mal: #f87171; --estado: var(--morado-claro);
+  display: grid; gap: clamp(8px, 1.4vh, 14px); justify-self: center; width: min(100%, 520px);
+  padding: clamp(14px, 2vh, 22px); border-radius: 28px; background: #0b0814;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 30px 60px rgba(30, 6, 70, 0.45);
+}
+.torniquete[data-caso="ok"] { --estado: var(--ok); }
+.torniquete[data-caso="usado"], .torniquete[data-caso="no"] { --estado: var(--mal); }
+.torniquete__pantalla {
+  display: grid; justify-items: center; gap: 4px; padding: 12px 14px; border-radius: 14px; text-align: center;
+  background: #06040b; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+}
+.torniquete__kanji { color: var(--estado); font-size: 13px; font-weight: 800; letter-spacing: 0.3em; transition: color 300ms; }
+.torniquete__msg { color: var(--estado); font-size: clamp(17px, 1.6vw, 22px); text-shadow: 0 0 10px var(--estado); transition: color 300ms; }
+.torniquete__detalle { color: rgba(255, 255, 255, 0.55); font-size: 12px; }
+/* El paso: dos postes, dos aletas y el comprobante que entra al lector */
+.torniquete__paso { position: relative; display: grid; grid-template-columns: 1fr 1.25fr 1fr; align-items: end; height: clamp(110px, 20vh, 190px); }
+.torniquete__poste {
+  position: relative; z-index: 2; height: 78%; border-radius: 16px 16px 6px 6px;
+  background: linear-gradient(180deg, #2b2340, #18121f); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+.torniquete__lector {
+  position: absolute; left: 50%; top: 12%; translate: -50% 0; display: grid; place-items: center;
+  width: 62%; height: 28%; border-radius: 10px; background: #3a2d5c; color: rgba(255, 255, 255, 0.7);
+  font: 800 12px/1 ui-monospace, Menlo, monospace; box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.6);
+}
+.torniquete__luz {
+  position: absolute; left: 50%; bottom: 14%; translate: -50% 0; width: 34%; height: 8px; border-radius: 99px;
+  background: var(--estado); box-shadow: 0 0 14px var(--estado); transition: background-color 300ms, box-shadow 300ms;
+}
+.torniquete__aletas { position: relative; z-index: 1; display: flex; justify-content: center; height: 55%; margin-bottom: 12%; }
+.torniquete__aletas i {
+  width: 50%; height: 100%; background: linear-gradient(180deg, rgba(139, 92, 246, 0.9), rgba(109, 40, 217, 0.65));
+  transition: transform 500ms var(--curva), background-color 300ms;
+}
+.torniquete__aletas i:first-child { border-radius: 4px 14px 14px 4px; transform-origin: left center; }
+.torniquete__aletas i:last-child { border-radius: 14px 4px 4px 14px; transform-origin: right center; }
+.torniquete.abierto .torniquete__aletas i:first-child { transform: scaleX(0.08); }
+.torniquete.abierto .torniquete__aletas i:last-child { transform: scaleX(0.08); }
+.torniquete.rechazo .torniquete__aletas { animation: rechazo 420ms var(--curva); }
+@keyframes rechazo { 20% { translate: -6px 0; } 40% { translate: 6px 0; } 60% { translate: -4px 0; } 80% { translate: 3px 0; } }
+/* El comprobante */
+.ticket {
+  position: absolute; z-index: 3; left: 4%; top: 2%; display: grid; gap: 1px; width: 44%; padding: 8px 10px; border-radius: 10px;
+  background: var(--blanco); color: var(--negro); font-size: 11px; line-height: 1.25;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5); rotate: -6deg; opacity: 0;
+}
+.ticket small { color: var(--morado); font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; font-size: 10.5px; }
+.ticket b { font-size: 13px; }
+.ticket__monto { font-weight: 800; }
+.ticket__banco { color: #555; }
+/* El tablero de llegadas: letras de matriz de puntos, como en las estaciones */
+.tablero { border-radius: 12px; background: #06040b; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06); overflow: hidden; }
+.tablero__cabeza {
+  display: flex; gap: 10px; align-items: center; padding: 6px 12px; background: #120c1e;
+  color: rgba(255, 255, 255, 0.55); font-size: 11px; font-weight: 800; letter-spacing: 0.05em;
+}
+.tablero__cabeza span { color: #fbbf24; letter-spacing: 0.25em; }
+.tablero__filas { display: grid; margin: 0; padding: 4px 0; list-style: none; height: calc(3 * 26px + 8px); overflow: hidden; }
+.tablero__filas li {
+  display: grid; grid-template-columns: 44px 1fr auto auto; align-items: center; gap: 10px; height: 26px; padding: 0 12px;
+  font: 700 12px/1 ui-monospace, Menlo, Consolas, monospace; color: #fbbf24;
+  text-shadow: 0 0 6px rgba(251, 191, 36, 0.55);
+}
+.tablero__filas li .ok { color: #4ade80; text-shadow: 0 0 6px rgba(74, 222, 128, 0.6); }
+.tablero__filas li .monto { text-align: right; }
+.tablero__filas li.nueva { animation: fila-entra 500ms var(--curva); }
+@keyframes fila-entra { from { opacity: 0; transform: translateY(-100%); } }
+.torniquete__botones { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.torniquete__botones button {
+  min-height: 38px; padding: 0 14px; border: 0; border-radius: 999px; cursor: pointer;
+  background: rgba(255, 255, 255, 0.08); color: var(--blanco); font-size: 13px; font-weight: 800;
+  transition: background-color 200ms, scale 200ms var(--curva);
+}
+.torniquete__botones button:hover { background: rgba(255, 255, 255, 0.16); }
+.torniquete__botones button:active { scale: 0.96; }
+.torniquete__botones button[aria-pressed="true"] { background: var(--blanco); color: var(--negro); }
+
+/* ---------- Inicio: bajo el cursor, la frase se ve hecha de código ---------- */
+.solo-movil { display: none; }
+@property --tr { syntax: "<length>"; inherits: true; initial-value: 0px; }
+.inicio__campo { --tr: 0px; transition: --tr 650ms var(--curva); }
+.inicio__campo.revelando { --tr: 170px; }
+/* La frase blanca se apaga dentro del círculo... */
+.js .inicio__titulo:not(.inicio__titulo--codigo) {
+  -webkit-mask-image: radial-gradient(circle at var(--tx, -999px) var(--ty, -999px), transparent calc(var(--tr) * 0.55), #000 var(--tr));
+  mask-image: radial-gradient(circle at var(--tx, -999px) var(--ty, -999px), transparent calc(var(--tr) * 0.55), #000 var(--tr));
+}
+/* ...y ahí aparece la misma frase, con las letras rellenas de código */
+.inicio__titulo--codigo { display: none; }
+.js .inicio__titulo--codigo {
+  display: block; pointer-events: none; color: transparent;
+  -webkit-mask-image: radial-gradient(circle at var(--tx, -999px) var(--ty, -999px), #000 calc(var(--tr) * 0.55), transparent var(--tr));
+  mask-image: radial-gradient(circle at var(--tx, -999px) var(--ty, -999px), #000 calc(var(--tr) * 0.55), transparent var(--tr));
+}
+.inicio__titulo--codigo .palabra {
+  color: transparent;
+  background-image: var(--textura-codigo, none); background-size: 360px auto; background-repeat: repeat;
+  -webkit-background-clip: text; background-clip: text;
+}
+@keyframes codigo-corre { to { background-position: 0 -480px; } }
+/* El mismo efecto, reutilizable: .revela > título + .revela__codigo (js/experiencia.js) */
+.revela { position: relative; width: fit-content; --tr: 0px; transition: --tr 650ms var(--curva); }
+.revela.revelando { --tr: 130px; }
+.js .revela > :not(.revela__codigo) {
+  -webkit-mask-image: radial-gradient(circle at var(--tx, -999px) var(--ty, -999px), transparent calc(var(--tr) * 0.55), #000 var(--tr));
+  mask-image: radial-gradient(circle at var(--tx, -999px) var(--ty, -999px), transparent calc(var(--tr) * 0.55), #000 var(--tr));
+}
+.revela__codigo { display: none; }
+.js .revela__codigo {
+  display: block; position: absolute; inset: 0; margin: 0; pointer-events: none; color: transparent;
+  -webkit-mask-image: radial-gradient(circle at var(--tx, -999px) var(--ty, -999px), #000 calc(var(--tr) * 0.55), transparent var(--tr));
+  mask-image: radial-gradient(circle at var(--tx, -999px) var(--ty, -999px), #000 calc(var(--tr) * 0.55), transparent var(--tr));
+}
+.revela__codigo .palabra {
+  color: transparent;
+  background-image: var(--textura-codigo, none); background-size: 360px auto; background-repeat: repeat;
+  -webkit-background-clip: text; background-clip: text;
+}
+
+/* ---------- 2 · Ronova Studio: el logo como protagonista y la ficha del estudio ---------- */
+.sesion--estudio {
+  display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); grid-template-rows: minmax(0, 1fr) auto;
+  gap: 14px clamp(28px, 4vw, 64px); background: var(--blanco);
+}
+.estudio__marca {
+  position: relative; display: grid; place-items: center; margin: 0; padding: 40px;
+  border-radius: 26px; background: var(--negro); overflow: hidden;
+}
+.estudio__marca img {
+  width: min(78%, 380px); height: auto;
+  filter: drop-shadow(0 0 18px rgba(139, 92, 246, 0.55));
+}
+.estudio__marca.encendida img { animation: logo-enciende 1.5s 0.15s steps(1, end) both; }
+/* Se enciende enseguida y luego falla tres veces, rápido, como un letrero viejo de Tokio */
+@keyframes logo-enciende {
+  0% { opacity: 0.15; filter: none; }
+  6%, 30%, 44%, 58%, 100% { opacity: 1; filter: drop-shadow(0 0 18px rgba(139, 92, 246, 0.55)); }
+  26%, 40%, 54% { opacity: 0.2; filter: none; }
+}
+.estudio__marca figcaption {
+  position: absolute; right: 22px; top: 50%; translate: 0 -50%;
+  writing-mode: vertical-rl; letter-spacing: 0.4em; font-size: var(--step-small); color: var(--gris);
+}
+.estudio__texto { display: grid; align-content: center; gap: clamp(12px, 2vh, 22px); }
+.estudio__texto .titulo { font-size: clamp(36px, min(4.6vw, 7vh), 80px); }
+.estudio__frase {
+  max-width: 52ch; font-size: clamp(16px, min(1.35vw, 2.4vh), 24px); font-weight: 500; line-height: 1.4; letter-spacing: -0.01em;
+}
+.estudio__frase em { font-style: normal; font-weight: 800; color: var(--morado); }
+/* La ficha: como la etiqueta de un producto japonés */
+.ficha {
+  display: grid; grid-template-columns: 1fr 1fr; margin: 0; max-width: 640px;
+  border: 2px solid var(--negro); border-radius: 18px; overflow: hidden; background: var(--blanco);
+}
+.ficha::before {
+  content: "ficha del estudio"; grid-column: 1 / -1; display: block; padding: 7px 14px;
+  background: var(--negro); color: var(--blanco); font-size: var(--step-small); font-weight: 800; letter-spacing: 0.04em;
+}
+:lang(en) .ficha::before { content: "studio profile"; }
+:lang(ja) .ficha::before { content: "スタジオ概要"; }
+.ficha div { display: grid; gap: 0; padding: 7px 14px; border-top: 1px solid rgba(0, 0, 0, 0.18); }
+.ficha div:nth-of-type(odd) { border-right: 1px solid rgba(0, 0, 0, 0.18); }
+.ficha div:last-child:nth-of-type(odd) { grid-column: 1 / -1; border-right: 0; }
+.ficha dt { font-size: var(--step-small); color: #555; }
+.ficha dt span { margin-right: 6px; color: var(--morado); font-weight: 800; }
+.ficha dd { margin: 0; font-weight: 800; }
+.ficha dd span { margin-right: 6px; color: var(--morado); }
+/* Pantallas anchas y bajitas: la ficha en tres columnas, así ocupa dos filas */
+@media (min-aspect-ratio: 16/9) and (min-width: 1024px) {
+  .ficha { grid-template-columns: repeat(3, 1fr); max-width: 760px; }
+  .ficha div:nth-of-type(odd) { border-right: 0; }
+  .ficha div:not(:nth-of-type(3n)) { border-right: 1px solid rgba(0, 0, 0, 0.18); }
+  .ficha div:last-child:nth-of-type(odd) { grid-column: auto; }
+  .ficha div:last-child { grid-column: span 2; border-right: 0; }
+}
+.borrador-dato { font-style: italic; opacity: 0.55; }
+.estudio__pilares { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.estudio__pilares li {
+  display: grid; grid-template-columns: auto 1fr; align-items: baseline; align-content: start; gap: 6px 12px;
+  padding: 18px; padding: clamp(16px, 1.6vw, 22px) clamp(18px, 1.8vw, 26px);
+  border-radius: 22px; background: var(--negro); color: var(--blanco);
+}
+.estudio__pilares li:nth-child(2) { background: var(--morado); }
+/* Encabezado en una línea: こだわり kodawari; la explicación debajo, a todo el ancho */
+.valor__kanji {
+  font-size: clamp(18px, min(1.6vw, 2.8vh), 24px); font-weight: 800; letter-spacing: 0.04em; line-height: 1;
+  color: var(--morado-claro);
+}
+.estudio__pilares li:nth-child(2) .valor__kanji { color: var(--blanco); }
+.estudio__pilares b { font-size: clamp(18px, min(1.6vw, 2.8vh), 24px); font-weight: 800; line-height: 1; letter-spacing: -0.01em; }
+.estudio__pilares span:not(.valor__kanji) { grid-column: 1 / -1; color: rgba(255, 255, 255, 0.84); }
+
+/* ---------- 3 · Sobre mí ---------- */
+.sesion--yo {
+  display: grid; grid-template-columns: minmax(0, 0.8fr) 1fr; gap: clamp(32px, 6vw, 110px); align-items: center;
+  background: var(--negro); color: var(--blanco);
+}
+/* La foto con su luz morada, fundida con el fondo negro */
+.yo__foto {
+  position: relative; display: grid; place-items: center; margin: 0;
+  /* Los logos que se acercan a la cámara no deben agrandar la sesión */
+  overflow: clip; overflow-clip-margin: 24px;
+}
+
+.yo__escena {
+  position: relative; isolation: isolate;
+  height: min(74vh, 700px); width: auto; aspect-ratio: 1024 / 1536;
+}
+.yo__retrato {
+  display: block; width: 100%; height: 100%; object-fit: cover;
+  /* Fondo ya recortado: solo se desvanece abajo, donde termina el suéter */
+  -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+}
+/* La órbita: anillos en 3D y logos que pasan por delante y por detrás (js/experiencia.js) */
+.yo__retrato { position: relative; z-index: 1; }
+.anillos { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.anillos--atras { z-index: 0; }
+.anillos--frente { z-index: 2; }
+.anillo { fill: none; transform-box: fill-box; transform-origin: center; }
+/* Marcas como de reloj y puntos, girando en sentidos opuestos; se desvanecen a los lados */
+.anillo--marcas { stroke-width: 5; stroke-dasharray: 1.5 13; animation: anillo-corre 18s linear infinite; }
+.anillo--puntos { stroke-width: 1.4; stroke-dasharray: 2 7; animation: anillo-corre 26s linear infinite reverse; }
+.anillos--atras .anillo { opacity: 0.5; }
+@keyframes anillo-corre { to { stroke-dashoffset: -290; } }
+@media (prefers-reduced-motion: reduce) { .anillo { animation: none; } }
+/* Sin z-index propio: cada logo decide si va delante (3) o detrás (0) de la foto (1) */
+.orbita { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; pointer-events: none; }
+.orbita__item {
+  position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 8px;
+  will-change: transform, opacity, filter;
+}
+.orbita__chip {
+  display: grid; place-items: center; flex: none; width: 52px; height: 52px; margin: -26px 0 0 -26px; border-radius: 16px;
+  background: rgba(14, 10, 24, 0.9); border: 1px solid rgba(255, 255, 255, 0.16);
+  transition: box-shadow 400ms var(--curva), border-color 400ms var(--curva);
+}
+.orbita__chip svg { width: 26px; height: 26px; fill: var(--color); }
+.orbita__item.al-frente .orbita__chip {
+  border-color: var(--color);
+  box-shadow: 0 0 0 1px var(--color), 0 0 26px color-mix(in srgb, var(--color) 60%, transparent);
+}
+.orbita__nombre {
+  margin-top: -26px; padding: 5px 10px; border-radius: 999px; white-space: nowrap;
+  background: var(--blanco); color: var(--negro); font-size: 13px; font-weight: 800;
+  opacity: 0; translate: -6px 0; transition: opacity 300ms var(--curva), translate 400ms var(--curva);
+}
+.orbita__item.al-frente .orbita__nombre { opacity: 1; translate: 0 0; }
+.yo__datos { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.yo__datos li {
+  padding: 7px 14px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.22);
+  font-size: var(--step-small); font-weight: 500; color: var(--blanco);
+}
+.yo__datos li:first-child { background: var(--morado); border-color: var(--morado); }
+.yo__acciones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.boton--borde { background: transparent; color: var(--blanco); box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.4); }
+@media (hover: hover) { .boton--borde:hover { background: var(--blanco); color: var(--negro); } }
+.yo__acciones .boton span { display: inline-block; margin-left: 8px; transition: transform 300ms var(--curva); }
+@media (hover: hover) { .yo__acciones .boton:hover span { transform: translateX(5px); } }
+.yo__texto { display: grid; gap: clamp(12px, 2.2vh, 22px); max-width: 680px; }
+/* El nombre en una sola línea, el título más grande de la sesión */
+.yo__titulo { font-size: clamp(40px, min(5vw, 10.5vh), 96px); white-space: nowrap; }
+.yo__frase { font-size: var(--step-lead); line-height: 1.35; }
+.yo__japon { font-style: normal; font-weight: 800; color: var(--morado-claro); }
+
+/* ---------- 4 · Lo que hago: una máquina expendedora japonesa (自販機) ---------- */
+.sesion--servicios { display: flex; flex-direction: column; justify-content: center; background: var(--morado); color: var(--blanco); }
+.servicios__leyenda { display: flex; align-items: center; gap: 8px; font-size: var(--step-small); font-weight: 500; }
+.servicios__leyenda .lampara--no { margin-left: 12px; }
+/* La lucecita de estado, como en las máquinas de Tokio */
+.lampara { display: inline-block; flex: none; width: 9px; height: 9px; border-radius: 50%; }
+.lampara--si { background: #4ade80; box-shadow: 0 0 8px #4ade80; }
+.lampara--no { background: #f87171; box-shadow: 0 0 8px rgba(248, 113, 113, 0.8); }
+/* El cuerpo de la máquina */
+.maquina {
+  padding: clamp(10px, 1.4vw, 18px); border-radius: 28px; background: #0b0814;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1), 0 30px 60px rgba(30, 6, 70, 0.45);
+}
+/* El letrero luminoso: el título de la sesión, en neón */
+.maquina__letrero {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px;
+  margin-bottom: clamp(8px, 1.4vh, 16px); padding: clamp(10px, 1.8vh, 20px) 22px; border-radius: 18px;
+  background: radial-gradient(ellipse at 50% 120%, rgba(139, 92, 246, 0.35), transparent 70%), #150e24;
+  box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.35), inset 0 0 40px rgba(139, 92, 246, 0.15);
+}
+.maquina__marca {
+  justify-self: start; color: #f6f0ff; font-size: clamp(14px, 1.3vw, 20px); font-weight: 800; letter-spacing: 0.22em;
+  text-shadow: 0 0 6px var(--morado-claro), 0 0 16px var(--morado);
+}
+.maquina__titulo {
+  font-size: clamp(30px, min(3.8vw, 7vh), 64px); font-weight: 800; line-height: 1; letter-spacing: -0.03em; white-space: nowrap;
+  color: #f6f0ff;
+  text-shadow: 0 0 6px #fff, 0 0 18px var(--morado-claro), 0 0 42px var(--morado-claro), 0 0 80px var(--morado);
+}
+.maquina__letrero .servicios__leyenda { justify-self: end; color: rgba(255, 255, 255, 0.8); }
+/* Al llegar, el letrero parpadea antes de quedarse encendido */
+.maquina.encendida .maquina__titulo { animation: enciende-letrero 1.3s 0.4s steps(1, end) both; }
+@keyframes enciende-letrero { 0%, 14%, 26% { opacity: 0.2; text-shadow: none; } 8%, 20%, 100% { opacity: 1; } }
+.maquina__vitrina { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+/* Cada producto, detrás del vidrio */
+.producto > a, .producto > div {
+  position: relative; display: grid; align-content: start; gap: 6px; height: 100%;
+  padding: clamp(12px, 1.4vw, 18px); border-radius: 18px; overflow: hidden;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  color: var(--blanco); text-decoration: none;
+  transition: translate 350ms var(--curva), box-shadow 350ms var(--curva), background-color 350ms;
+}
+/* El reflejo del vidrio */
+.producto > a::after, .producto > div::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.07) 45%, transparent 55%);
+}
+.producto__kanji {
+  display: grid; place-items: center; width: clamp(40px, 3.6vw, 52px); aspect-ratio: 1; border-radius: 14px; margin-bottom: 4px;
+  background: var(--morado); font-size: clamp(20px, 1.8vw, 26px); font-weight: 800;
+  box-shadow: 0 0 22px rgba(139, 92, 246, 0.55);
+}
+.producto b { font-size: clamp(17px, min(1.5vw, 2.8vh), 24px); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
+.producto__desc { color: rgba(255, 255, 255, 0.72); font-size: var(--step-small); line-height: 1.4; }
+.producto__estado {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 4px;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.03em; color: rgba(255, 255, 255, 0.85);
+}
+@media (hover: hover) {
+  .producto > a:hover { translate: 0 -4px; box-shadow: inset 0 0 0 1px var(--morado-claro), 0 0 28px rgba(139, 92, 246, 0.45); }
+}
+/* Próximamente: apagado y con candado */
+.producto--pronto .producto__kanji { background: #2a2238; color: rgba(255, 255, 255, 0.45); box-shadow: none; }
+.producto--pronto b, .producto--pronto .producto__desc { opacity: 0.6; }
+.producto__candado { position: absolute; right: 14px; top: 14px; width: 20px; height: 20px; color: rgba(255, 255, 255, 0.55); }
+@media (hover: hover) {
+  .producto--pronto > div:hover .producto__candado { animation: candado 450ms var(--curva); color: #f87171; }
+}
+@keyframes candado { 20% { rotate: -14deg; } 40% { rotate: 12deg; } 60% { rotate: -8deg; } 80% { rotate: 4deg; } }
+/* ¿Tu idea?: la casilla especial */
+.producto--idea > a { background: var(--blanco); color: var(--negro); }
+.producto--idea .producto__kanji { background: var(--negro); color: var(--blanco); box-shadow: none; }
+.producto--idea .producto__desc { color: rgba(0, 0, 0, 0.65); }
+.producto--idea .producto__estado { color: var(--morado); }
+
+.trabajo__lead { color: var(--gris); }
+
+/* ---------- 7 · Agentes de IA: un konbini de Tokio abierto toda la noche ---------- */
+.sesion--agentes {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 90px); align-items: center;
+  background: radial-gradient(ellipse at 75% 60%, rgba(109, 40, 217, 0.28), transparent 60%), var(--negro); color: var(--blanco);
+}
+.agentes__texto { display: grid; gap: clamp(14px, 2.4vh, 24px); justify-items: start; }
+.agentes__texto .titulo { font-size: clamp(36px, min(4.6vw, 8vh), 80px); }
+/* "nunca cierra" brilla como el letrero de la tienda */
+.agentes__neon {
+  color: #f6f0ff;
+  text-shadow: 0 0 6px #fff, 0 0 18px var(--morado-claro), 0 0 44px var(--morado-claro), 0 0 80px var(--morado);
+}
+.agentes__lead { max-width: 40ch; font-size: clamp(15px, min(1.3vw, 2.5vh), 20px); line-height: 1.45; color: rgba(255, 255, 255, 0.8); }
+.agentes__lead b { color: var(--blanco); }
+/* Lo que hace el agente: tres renglones con su kanji */
+.agentes__hace { display: grid; gap: clamp(6px, 1.2vh, 10px); margin: 0; padding: 0; list-style: none; }
+.agentes__hace li { display: flex; align-items: center; gap: 14px; }
+.agentes__hace li > span:last-child { display: grid; gap: 1px; color: rgba(255, 255, 255, 0.65); font-size: var(--step-small); }
+.agentes__hace b { color: var(--blanco); font-size: clamp(15px, 1.2vw, 18px); font-weight: 800; }
+.agentes__kanji {
+  display: grid; place-items: center; flex: none; width: 44px; height: 44px; border-radius: 14px;
+  background: rgba(139, 92, 246, 0.16); color: var(--morado-claro); font-size: 20px; font-weight: 800;
+  box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.45);
+}
+.agentes__demo { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; color: rgba(255, 255, 255, 0.6); font-size: var(--step-small); }
+.agentes__canales { display: inline-flex; gap: 4px; padding: 5px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); }
+.agentes__canales button {
+  min-height: 42px; padding: 0 18px; border: 0; border-radius: 999px; background: transparent; color: var(--blanco);
+  font-weight: 800; cursor: pointer; transition: background-color 250ms var(--curva), color 250ms;
+}
+.agentes__canales [aria-pressed="true"] { background: var(--blanco); color: var(--negro); }
+
+/* La tienda */
+.konbini { display: grid; justify-self: center; width: min(100%, 470px); }
+.konbini__letrero {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px;
+  padding: 12px 16px; border-radius: 16px 16px 0 0; background: #f6f0ff; color: var(--morado-oscuro);
+  box-shadow: 0 0 40px rgba(196, 181, 253, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.6);
+}
+.konbini__horas { padding: 4px 8px; border-radius: 8px; background: var(--morado); color: var(--blanco); font-size: 14px; font-weight: 800; letter-spacing: 0.06em; }
+.konbini__nombre { font-size: clamp(14px, 1.3vw, 20px); font-weight: 800; letter-spacing: 0.1em; white-space: nowrap; }
+.konbini__reloj {
+  display: flex; align-items: baseline; gap: 4px; padding: 5px 10px; border-radius: 8px; background: #0b0814;
+  font: 800 clamp(17px, 1.5vw, 22px)/1 ui-monospace, Menlo, Consolas, monospace; color: #4ade80; font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 8px rgba(74, 222, 128, 0.7);
+}
+.konbini__reloj small { font-size: 11px; }
+.konbini__reloj.salta span { animation: reloj-salta 450ms var(--curva); }
+@keyframes reloj-salta { 0% { opacity: 0.2; transform: translateY(-6px); } }
+/* Las rayas de color del toldo, como en las konbini */
+.konbini__toldo { height: 14px; background: repeating-linear-gradient(90deg, var(--morado) 0 26px, #f6f0ff 26px 32px, var(--morado-oscuro) 32px 58px, #f6f0ff 58px 64px); }
+.konbini__vitrina {
+  position: relative; display: grid; padding: 16px 16px 12px; border-radius: 0 0 22px 22px;
+  background: linear-gradient(180deg, rgba(196, 181, 253, 0.16), rgba(139, 92, 246, 0.06));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12), inset 0 40px 60px rgba(246, 240, 255, 0.07), 0 30px 70px rgba(109, 40, 217, 0.35);
+}
+.konbini__reflejo {
+  position: absolute; inset: 0; z-index: 2; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.07) 40%, transparent 52%);
+}
+.konbini__abierto { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 10px; font-size: 12px; font-weight: 800; letter-spacing: 0.08em; color: rgba(255, 255, 255, 0.8); }
+.konbini__contador { margin-top: 12px; text-align: center; font-size: var(--step-small); color: rgba(255, 255, 255, 0.7); }
+.konbini__contador b { color: var(--blanco); font-size: 1.4em; font-variant-numeric: tabular-nums; }
+/* El chat dentro de la vitrina */
+.chat {
+  display: grid; grid-template-rows: auto 1fr; height: clamp(250px, calc(100vh - 360px), 440px); overflow: hidden;
+  border-radius: 22px; background: var(--negro); color: var(--blanco); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+.chat__cabeza { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #141018; }
+.chat__cabeza b { display: block; }
+.chat__cabeza small { font-size: var(--step-small); color: var(--gris); }
+.chat__avatar { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--morado); font-weight: 800; }
+.chat__mensajes { display: flex; flex-direction: column; gap: 8px; padding: 14px; overflow-y: auto; scrollbar-width: none; scroll-behavior: smooth; }
+.chat__msj {
+  max-width: 84%; padding: 10px 14px; border-radius: 18px; line-height: 1.4; font-size: 14px;
+  animation: burbuja 380ms var(--curva) both;
+}
+.chat__msj--cliente { align-self: flex-end; background: #2a2433; border-bottom-right-radius: 6px; }
+.chat__msj--agente { align-self: flex-start; background: var(--morado); border-bottom-left-radius: 6px; }
+.chat[data-canal="instagram"] .chat__msj--agente { background: var(--morado-oscuro); }
+/* La hora de cada cliente, como las marcas de fecha de WhatsApp */
+.chat__hora { align-self: center; padding: 4px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.7); font-size: 11px; font-weight: 800; animation: burbuja 380ms var(--curva) both; }
+.chat__msj--escribiendo { display: flex; gap: 5px; padding: 14px 16px; }
+.chat__msj--escribiendo i { width: 7px; height: 7px; border-radius: 50%; background: var(--blanco); animation: punto 1s ease-in-out infinite; }
+.chat__msj--escribiendo i:nth-child(2) { animation-delay: 150ms; }
+.chat__msj--escribiendo i:nth-child(3) { animation-delay: 300ms; }
+@keyframes burbuja { from { opacity: 0; transform: translateY(12px) scale(0.96); } }
+@keyframes punto { 0%, 100% { opacity: 0.3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-3px); } }
+
+/* ---------- 8 · Cómo trabajo: una página de manga ---------- */
+.sesion--proceso {
+  display: flex; flex-direction: column; justify-content: center; gap: clamp(10px, 2vh, 20px);
+  background: #f4f1ea; color: var(--negro); /* papel */
+}
+.proceso__cabeza { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.proceso__cabeza .titulo { font-size: clamp(36px, min(4.6vw, 8vh), 80px); }
+.proceso__sub { max-width: 44ch; font-size: clamp(14px, 1.1vw, 17px); color: #2e2836; }
+.proceso__sub b { color: var(--morado); }
+/* La página: viñetas de tamaños distintos con borde de tinta */
+.manga {
+  display: grid; grid-template-columns: 1.1fr 1fr 1fr 1fr; gap: 10px;
+  flex: none; grid-template-rows: auto auto; margin: 0; padding: 10px; list-style: none;
+  background: var(--negro); border-radius: 6px;
+}
+.koma {
+  position: relative; display: grid; grid-template-rows: auto 1fr auto auto auto; gap: 4px; overflow: hidden;
+  padding: 10px 14px 14px; background: #fbfaf6; color: var(--negro);
+}
+/* Trama de puntos (screentone) en una esquina */
+.koma::before {
+  content: ""; position: absolute; right: 0; top: 0; width: 55%; height: 60%; pointer-events: none;
+  background-image: radial-gradient(circle, rgba(109, 40, 217, 0.2) 1.2px, transparent 1.5px); background-size: 7px 7px;
+  -webkit-mask-image: linear-gradient(225deg, #000, transparent 75%); mask-image: linear-gradient(225deg, #000, transparent 75%);
+}
+.koma--1 { grid-row: span 2; }
+.koma--6 { grid-column: span 2; }
+.koma--6 { background-color: var(--morado); color: var(--blanco); }
+.koma--6::before { background-image: radial-gradient(circle, rgba(255, 255, 255, 0.25) 1.2px, transparent 1.5px); }
+.koma__num {
+  position: absolute; left: 10px; top: 10px; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--negro); color: var(--blanco); font-size: 14px; font-weight: 800;
+}
+.koma--6 .koma__num { background: var(--blanco); color: var(--morado); }
+/* Onomatopeya gigante, como en los mangas */
+.koma__sfx {
+  position: absolute; right: 8px; top: 2px; font-size: clamp(54px, min(6vw, 11vh), 110px); font-weight: 800; line-height: 1;
+  color: transparent; -webkit-text-stroke: 2px var(--morado); rotate: 8deg; opacity: 0.85;
+}
+.koma--6 .koma__sfx { -webkit-text-stroke-color: var(--blanco); }
+/* El globo de diálogo */
+.koma__globo {
+  position: relative; z-index: 1; justify-self: start; max-width: calc(100% - 40px); margin: 0 0 14px 36px; padding: 7px 13px;
+  border: 2.5px solid var(--negro); border-radius: 22px; background: var(--blanco); color: var(--negro);
+  font-size: clamp(14px, 1.15vw, 17px); font-weight: 800; line-height: 1.25;
+}
+.koma__globo::after {
+  content: ""; position: absolute; left: 22px; bottom: -11px; width: 16px; height: 16px; background: var(--blanco);
+  border-right: 2.5px solid var(--negro); border-bottom: 2.5px solid var(--negro); transform: skewX(25deg) rotate(45deg);
+}
+/* Los dibujos hechos de código: llenan la viñeta y cuentan qué pasa en cada paso */
+.dibujo { align-self: center; justify-self: stretch; display: grid; gap: 6px; margin: 2px 0 8px; font: 600 clamp(12px, 0.95vw, 14px)/1.6 ui-monospace, Menlo, Consolas, monospace; }
+.dibujo code { font: inherit; }
+.dibujo i { font-style: normal; }
+.c-k { color: #c026d3; } .c-s { color: #15803d; } .c-f { color: #2563eb; } .c-c { color: #5f5869; } .c-ok { color: #15803d; font-weight: 800; }
+.dibujo--codigo, .dibujo--terminal { padding: 10px 12px; border-radius: 10px; background: #0b0814; color: #e9e4f5; box-shadow: 3px 3px 0 var(--negro); }
+.dibujo--codigo .c-k { color: #e879f9; } .dibujo--codigo .c-s, .dibujo--terminal .c-ok { color: #4ade80; } .dibujo--codigo .c-f { color: #93c5fd; }
+.d-color { display: inline-block; width: 12px; height: 12px; margin: 0 2px; border-radius: 3px; background: var(--c); vertical-align: -1px; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35); }
+.d-cursor { display: inline-block; width: 7px; height: 1.1em; margin-left: 2px; background: var(--morado-claro); vertical-align: -2px; animation: cursor-parpadea 1s steps(1) infinite; }
+@keyframes cursor-parpadea { 50% { opacity: 0; } }
+/* Mini chat */
+.dibujo--chat { font-family: inherit; font-size: clamp(14px, 1.1vw, 17px); gap: 8px; }
+.d-msj { max-width: 88%; padding: 8px 13px; border: 2px solid var(--negro); border-radius: 14px; background: var(--blanco); font-weight: 700; line-height: 1.3; }
+.d-msj--yo { justify-self: end; background: var(--morado); color: var(--blanco); }
+/* Barra de anticipo */
+.d-barra { display: block; height: 14px; border: 2px solid var(--negro); border-radius: 99px; overflow: hidden; background: var(--blanco); }
+.d-barra i { display: block; width: 0; height: 100%; background: repeating-linear-gradient(45deg, var(--morado) 0 8px, var(--morado-claro) 8px 16px); transition: width 1.1s 0.4s var(--curva); }
+.koma.llego .d-barra i { width: 50%; }
+.d-pct { font-weight: 800; }
+/* Calendario de soporte */
+.dibujo--calendario { grid-template-columns: repeat(15, 1fr); gap: 4px; max-width: 420px; }
+.dibujo--calendario i { aspect-ratio: 1; border-radius: 4px; background: rgba(255, 255, 255, 0.2); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35); }
+.dibujo--calendario i.hecho { background: var(--blanco); }
+.koma__titulo { align-self: end; font-size: clamp(19px, 1.6vw, 26px); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; }
+.koma__texto { font-size: clamp(14px, 1.05vw, 16px); line-height: 1.45; color: #2e2836; }
+.koma--6 .koma__texto { color: rgba(255, 255, 255, 0.85); }
+.koma__canales { display: flex; gap: 6px; margin: 6px 0 0; padding: 0; list-style: none; }
+.koma__canales li { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: var(--c); }
+.koma__canales svg { width: 18px; height: 18px; fill: var(--blanco); }
+/* Al llegar, las viñetas se "entintan" una detrás de otra */
+.js .koma { clip-path: inset(0 0 100% 0); transition: clip-path 600ms cubic-bezier(.77,0,.18,1); }
+.js .koma.llego { clip-path: inset(0 0 0 0); }
+.proceso__notas { display: grid; gap: 4px; justify-items: end; text-align: right; }
+.proceso__pago { font-size: clamp(13px, 1vw, 15px); color: #2e2836; }
+.proceso__pago b { color: var(--negro); }
+
+/* ---------- 9 · Lo que dicen: cartas de papel washi con sello hanko ---------- */
+.sesion--clientes {
+  display: grid; grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr); gap: clamp(28px, 4vw, 72px); align-items: center;
+  background: radial-gradient(ellipse at 70% 50%, rgba(109, 40, 217, 0.22), transparent 60%), #0b0814; color: var(--blanco);
+}
+.clientes__texto { display: grid; gap: clamp(12px, 2vh, 20px); justify-items: start; }
+.clientes__kanji { color: var(--morado-claro); font-size: 15px; font-weight: 800; letter-spacing: 0.45em; }
+.clientes__texto .titulo { font-size: clamp(44px, min(6vw, 11vh), 110px); }
+.clientes__lead { max-width: 30ch; font-size: clamp(16px, 1.35vw, 21px); line-height: 1.45; color: rgba(255, 255, 255, 0.78); }
+.clientes__mando { display: flex; align-items: center; gap: 14px; }
+.clientes__flecha {
+  width: 50px; height: 50px; border: 0; border-radius: 50%; cursor: pointer;
+  background: rgba(255, 255, 255, 0.08); color: var(--blanco); font-size: 19px; font-weight: 800;
+  transition: background-color 200ms, scale 200ms var(--curva);
+}
+.clientes__flecha:hover { background: var(--morado); }
+.clientes__flecha:active { scale: 0.92; }
+.clientes__cuenta { font: 700 15px/1 ui-monospace, Menlo, Consolas, monospace; color: rgba(255, 255, 255, 0.6); letter-spacing: 0.06em; }
+.clientes__cuenta b { color: var(--blanco); font-size: 20px; }
+/* La pila de cartas */
+.buzon { position: relative; display: grid; place-items: center; height: min(calc(100vh - 220px), 480px); }
+.buzon__pila { --desp: 14px; position: relative; width: min(100%, 660px); height: 100%; margin: 0; padding: 0; list-style: none; }
+.washi {
+  position: absolute; inset: 0; display: grid; grid-template-rows: auto 1fr auto; gap: 14px;
+  padding: clamp(22px, 3vh, 34px) clamp(22px, 2.4vw, 36px);
+  border-radius: 6px; color: #1d1626;
+  /* papel washi: crema con fibras */
+  background:
+    repeating-linear-gradient(83deg, rgba(120, 100, 70, 0.035) 0 2px, transparent 2px 9px),
+    repeating-linear-gradient(-12deg, rgba(120, 100, 70, 0.03) 0 1px, transparent 1px 13px),
+    linear-gradient(160deg, #fbf7ee, #f1eadb);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 24px 60px rgba(0, 0, 0, 0.55);
+  /* posición en la pila: --p = 0 arriba, 1, 2 detrás */
+  transform: translate(calc(var(--p, 0) * var(--desp)), calc(var(--p, 0) * -12px)) rotate(calc(var(--p, 0) * 2.5deg + var(--r, 0deg)));
+  /* las de atrás: opacas pero más oscuras (así no se transparenta el texto) */
+  filter: brightness(calc(1 - var(--p, 0) * 0.14));
+  z-index: calc(10 - var(--p, 0));
+  transition: transform 600ms var(--curva), filter 600ms var(--curva), opacity 400ms var(--curva);
+}
+.washi.arriba { cursor: grab; touch-action: pan-y; user-select: none; }
+.washi.arrastrando { cursor: grabbing; transition: none; }
+.washi img { -webkit-user-drag: none; pointer-events: none; }
+.washi.oculta { opacity: 0; pointer-events: none; }
+/* la que vuela por encima de todo; sin-transicion: para recolocarla sin que se vea */
+.washi.volando { z-index: 30; filter: none; transition: none; }
+.washi.sin-transicion { transition: none; }
+/* Línea roja de la carta, como el papel de cartas japonés */
+.washi::before { content: ""; position: absolute; left: 18px; top: 18px; bottom: 18px; width: 1px; background: rgba(196, 30, 58, 0.35); }
+.washi__fecha { justify-self: end; font-size: 12px; font-weight: 800; letter-spacing: 0.06em; color: #5f5446; }
+.washi__fecha span { color: #b91c3c; letter-spacing: 0.2em; margin-right: 4px; }
+.washi__frase {
+  align-self: center; margin: 0; padding-left: 10px;
+  font-size: clamp(20px, min(2vw, 3.8vh), 32px); font-weight: 500; line-height: 1.35; letter-spacing: -0.01em;
+}
+.washi__frase::before { content: "「"; color: #b91c3c; margin-left: -0.5em; }
+.washi__frase::after { content: "」"; color: #b91c3c; }
+.washi--tuya .washi__frase::before, .washi--tuya .washi__frase::after { content: none; }
+.washi__frase b { color: var(--morado); }
+.washi__frase.borrador { opacity: 0.6; font-style: italic; }
+.washi__firma { display: flex; align-items: center; gap: 12px; padding-left: 10px; }
+.washi__firma img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(0, 0, 0, 0.12); }
+.washi__firma p { display: grid; font-size: 13px; color: #5c5048; }
+.washi__firma b { font-size: 16px; color: #1d1626; }
+/* El sello hanko: rojo, redondo, un poco torcido y desgastado */
+.hanko {
+  display: grid; place-items: center; margin-left: auto; width: 62px; height: 62px; border-radius: 50%;
+  border: 3px solid #c41e3a; color: #c41e3a; font-size: 30px; font-weight: 800; rotate: -12deg;
+  box-shadow: inset 0 0 0 4px rgba(196, 30, 58, 0.12);
+  -webkit-mask-image: radial-gradient(circle at 30% 40%, #000 60%, rgba(0, 0, 0, 0.75) 61%, #000 70%);
+  mask-image: radial-gradient(circle at 30% 40%, #000 60%, rgba(0, 0, 0, 0.75) 61%, #000 70%);
+}
+.hanko--vacio { border-style: dashed; color: rgba(196, 30, 58, 0.6); }
+/* Al aparecer arriba, el sello se estampa */
+.washi.arriba .hanko { animation: estampa 600ms 350ms cubic-bezier(.2, 1.6, .4, 1) both; }
+@keyframes estampa { from { scale: 1.8; opacity: 0; } 60% { scale: 0.92; opacity: 1; } }
+
+
+/* ---------- 10 · Final: un letrero de neón que se enciende ---------- */
+.sesion--contacto {
+  display: flex; flex-direction: column; justify-content: center; gap: 48px;
+  background: var(--negro); color: var(--blanco);
+}
+.neon { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 20px; width: 100%; text-align: center; }
+.neon__letrero {
+  font-size: clamp(96px, min(17vw, 30vh), 280px); font-weight: 800; line-height: 0.9; letter-spacing: -0.04em;
+  color: #f6f0ff;
+}
+/* Apagado solo mientras espera encenderse; sin JavaScript se ve encendido */
+.js .neon:not(.encendido) .neon__letrero, .js .neon:not(.encendido) .neon__japones { color: #241b33; }
+.neon__japones {
+  position: absolute; right: 2%; top: 50%; translate: 0 -50%;
+  writing-mode: vertical-rl; font-size: clamp(22px, 2.4vw, 40px); font-weight: 800; letter-spacing: 0.2em;
+  color: #f6f0ff;
+}
+.neon__frase b { color: var(--blanco); }
+.neon__frase { max-width: 40ch; font-size: var(--step-lead); line-height: 1.35; color: rgba(255, 255, 255, 0.8); }
+/* WhatsApp arriba, a lo ancho; debajo, Instagram, Telegram y Discord en el mismo ancho */
+.neon__acciones { display: grid; gap: 10px; width: min(100%, 440px); }
+.canales-red { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 400px) { .canales-red { gap: 6px; } .canales-red .canal { gap: 6px; padding: 0 8px; font-size: 12px; } }
+.canal {
+  --c: var(--morado); display: flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 14px; border-radius: 999px; text-decoration: none;
+  background: rgba(255, 255, 255, 0.07); color: var(--blanco); font-weight: 800; font-size: 14px;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.14);
+  transition: background-color 250ms var(--curva), box-shadow 250ms var(--curva), translate 400ms var(--curva), scale 160ms var(--curva);
+}
+.canal svg { width: 19px; height: 19px; flex: none; fill: currentColor; }
+.canal:active { scale: 0.97; }
+.canal--whatsapp { --c: #25d366; min-height: 60px; background: #25d366; color: #052e16; font-size: 16px; box-shadow: 0 0 30px rgba(37, 211, 102, 0.35); }
+.canal--whatsapp svg { width: 22px; height: 22px; }
+.canal--instagram { --c: #e4405f; }
+.canal--telegram { --c: #26a5e4; }
+.canal--discord { --c: #5865f2; }
+@media (hover: hover) {
+  .canal:hover { background: var(--c); color: var(--blanco); box-shadow: 0 0 26px color-mix(in srgb, var(--c) 55%, transparent); }
+  .canal--whatsapp:hover { background: #3ee07a; color: #052e16; }
+}
+.neon.encendido .neon__letrero { animation: enciende 1.6s steps(1, end) forwards, zumba 4s 1.6s ease-in-out infinite; }
+.neon.encendido .neon__japones { animation: enciende 1.6s 0.5s steps(1, end) forwards; }
+@keyframes enciende {
+  0%, 12%, 24%, 34% { color: #241b33; text-shadow: none; }
+  8%, 18%, 30%, 100% {
+    color: #f6f0ff;
+    text-shadow: 0 0 6px #fff, 0 0 18px var(--morado-claro), 0 0 46px var(--morado-claro), 0 0 90px var(--morado);
+  }
+}
+/* El zumbido del neón: solo cambia la opacidad (no repinta la sombra en cada cuadro) */
+@keyframes zumba { 0%, 100% { opacity: 1; } 50% { opacity: 0.86; } }
+
+.sesion--contacto .pie { color: var(--gris); }
+.sesion--contacto .pie__creditos { color: var(--gris); }
+
+.pie {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 40px;
+  width: min(100%, 1240px); margin: 0 auto; font-size: var(--step-small);
+}
+.pie img { width: 150px; }
+.pie__creditos { flex: 1; min-width: 280px; color: #444; }
+
+/* ---------- Modo mundo (escritorio): la página es una ciudad que recorre una cámara ---------- */
+.modo-mundo { scrollbar-width: none; }
+.modo-mundo::-webkit-scrollbar { display: none; }
+.modo-mundo body { height: 100vh; overflow: hidden; }
+.modo-mundo .camara { position: fixed; inset: 0; overflow: hidden; background: var(--negro); }
+.modo-mundo .mundo { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }
+.modo-mundo .sesion {
+  position: absolute; left: 0; top: 0;
+  width: var(--ancho, 100vw); height: var(--alto, 100vh); min-height: 0;
+  will-change: transform;
+  /* Si el contenido no cabe (celular), la sesión se desliza por dentro. */
+  overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+.modo-mundo .sesion::-webkit-scrollbar { display: none; }
+.modo-mundo .sesion--inicio { overflow: hidden; }
+.modo-mundo { overscroll-behavior: none; }
+/* Vista general: todas las sesiones a la vista, esperando el clic */
+.modo-mundo.en-general .camara { cursor: pointer; }
+.modo-mundo.en-general .sesion { pointer-events: none; }
+.modo-mundo.en-general .barra { opacity: 0; pointer-events: none; }
+@keyframes aparece { from { opacity: 0; transform: translate(-50%, 12px); } }
+
+.barra { transition: opacity 400ms var(--curva); }
+
+/* ---------- Intro ---------- */
+.con-intro body.en-intro { overflow: hidden; }
+.intro {
+  position: fixed; inset: 0; z-index: 40;
+  display: grid; place-items: center;
+  background: var(--negro); cursor: pointer;
+}
+.intro.abierta { background: transparent; }
+.intro svg { width: min(72vw, 820px); height: auto; overflow: visible; }
+.intro .letra, .intro .studio, .intro .brocha-grupo { transition: opacity 360ms var(--curva), transform 520ms var(--curva); }
+.intro__cuenta {
+  position: fixed; left: var(--margen); bottom: calc(var(--margen) * 0.4);
+  font-size: clamp(80px, 13vw, 220px); font-weight: 800; line-height: 1; letter-spacing: -0.05em;
+  color: var(--morado-claro); font-variant-numeric: tabular-nums;
+}
+.intro__meta {
+  position: fixed; top: var(--margen); font-size: var(--step-small); color: var(--gris); letter-spacing: 0.08em;
+}
+.intro__meta--izq { left: var(--margen); letter-spacing: 0.3em; }
+.intro__meta--der { right: var(--margen); }
+.intro__saltar {
+  position: fixed; right: var(--margen); bottom: var(--margen);
+  padding: 10px 14px; border: 0; background: transparent; color: var(--gris);
+  font-size: var(--step-small); cursor: pointer;
+}
+.intro__saltar:hover { color: var(--blanco); }
+.intro .ventana { position: fixed; inset: 0; z-index: 41; width: 100%; height: 100%; pointer-events: none; }
+.en-intro .barra { opacity: 0; }
+
+/* ---------- Celular y tablet (modo apilado) ---------- */
+@media (max-width: 1023px), (max-height: 619px) {
+  .barra { inset: 12px 12px auto; }
+  .barra__marca, .barra__menu, .barra__sonido, .idioma { height: 46px; }
+  .idioma { padding: 4px; }
+  .idioma__boton { height: 38px; padding: 0 12px; }
+  .idioma--abierto .idioma__boton { padding: 0 9px; }
+  .idioma__menu { grid-template-columns: repeat(3, 38px); height: 38px; }
+  .idioma--abierto .idioma__menu { max-width: 114px; }
+  .idioma__menu a { width: 38px; height: 38px; font-size: 12px; }
+  .barra__marca { width: 46px; }
+  .barra__marca .logo { width: 40px; }
+  .barra__sonido { padding: 0 14px; }
+  .barra__sonido-texto { display: none; }
+  .menu { grid-template-columns: 1fr; grid-template-rows: 1fr auto; align-items: stretch; gap: 12px; padding: 76px 16px 16px; overflow: hidden; }
+  .menu__lado { order: 2; max-width: none; gap: 10px; }
+  .menu__lado p:not(.menu__reloj), .menu__logo { display: none; }
+  .menu__lado .boton { justify-self: stretch; }
+  .menu__red { min-height: 0; }
+  .menu__nav a { width: 120px; margin-left: -60px; margin-top: -21px; }
+  .menu__num { width: 42px; height: 42px; font-size: 15px; }
+  .menu__nombre { font-size: 13px; }
+  .menu__desc { display: none; }
+
+  .sesion { padding: 104px 16px 40px; }
+  .sesion--inicio { padding: 0; }
+  .inicio__campo { inset: 0 0 22% 0; }
+  .inicio__titulo { top: 12%; left: 16px; font-size: 14vw; }
+  :lang(ja) .inicio__titulo { font-size: 11vw; }
+  .solo-movil { display: inline; }
+  .inicio__campo.revelando { --tr: 120px; }
+  .revela.revelando { --tr: 90px; }
+  .inicio__foto { right: -6%; bottom: 19%; width: 52vw; }
+  .inicio__banda { z-index: 3; }
+  .inicio__vertical { display: none; }
+  .inicio__banda { height: 22%; flex-direction: column; align-items: stretch; justify-content: center; gap: 14px; padding: 0 16px; }
+  .inicio__banda p { font-size: 1rem; }
+
+  .sesion--trabajo, .sesion--verificador { grid-template-columns: 1fr; grid-auto-rows: max-content; align-content: start; }
+  .torniquete { width: 100%; }
+  .bancos { grid-template-columns: 1fr 1fr; }
+  .sesion--contacto { justify-content: center; }
+  .sesion--estudio { grid-template-columns: 1fr; grid-template-rows: none; grid-auto-rows: max-content; }
+  .estudio__marca { height: 38svh; padding: 24px; }
+  .estudio__pilares { grid-template-columns: 1fr; }
+  .estudio__marca figcaption { display: none; }
+  .sesion--yo, .sesion--agentes { grid-template-columns: 1fr; align-content: start; grid-auto-rows: max-content; }
+  .yo__escena { height: 52svh; }
+  .yo__titulo { font-size: 12.5vw; }
+  .orbita__chip { width: 42px; height: 42px; margin: -21px 0 0 -21px; border-radius: 13px; }
+  .orbita__chip svg { width: 21px; height: 21px; }
+  .orbita__nombre { margin-top: -21px; font-size: 12px; }
+  .sesion--servicios { justify-content: flex-start; }
+  .maquina__letrero { grid-template-columns: 1fr; justify-items: center; gap: 6px; padding: 14px; }
+  .maquina__marca, .maquina__letrero .servicios__leyenda { justify-self: center; }
+  .maquina__titulo { font-size: 34px; }
+  .maquina__vitrina { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .producto__desc { font-size: 13px; }
+  .chat { height: 52svh; }
+  .konbini { width: 100%; }
+  .neon__letrero { font-size: 19vw; }
+  .neon__japones { position: static; translate: none; writing-mode: horizontal-tb; }
+  .barra__whatsapp { width: 46px; height: 46px; padding: 0; justify-content: center; }
+  .barra__whatsapp-texto { display: none; }
+  .manga { flex: none; grid-template-columns: 1fr; grid-template-rows: none; max-height: none; }
+  .koma--1, .koma--6 { grid-row: auto; grid-column: auto; }
+  .koma { min-height: 0; }
+  .dibujo { margin-bottom: 4px; }
+  .koma__globo { margin-bottom: 10px; }
+  .proceso__notas { justify-items: start; text-align: left; }
+  .sesion--clientes { grid-template-columns: 1fr; align-content: start; }
+  .buzon { height: 440px; }
+  .buzon__pila { --desp: 5px; width: calc(100% - 12px); justify-self: start; }
+  .sesion--proceso, .sesion--clientes { justify-content: flex-start; }
+
+  /* Paquetes y planes: un carrusel que se desliza de lado, una tarjeta a la vez */
+  .modo-mundo .pista-scroll { top: auto; bottom: calc(22% + 18px); left: 16px; translate: 0 0; }
+  .cartas {
+    --alto-carta: min(62svh, 430px);
+    justify-content: flex-start; gap: 14px; margin: 0 -16px; padding: 10px 16px 6px;
+    overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; scroll-padding-inline: 16px;
+  }
+  .cartas::-webkit-scrollbar { display: none; }
+  .carta { flex: none; scroll-snap-align: start; }
+}
+
+/* Máscaras de palabra para la coreografía (js/coreografia.js) */
+.mascara {
+  display: inline-block; vertical-align: top; overflow: hidden;
+  padding: 0.12em 0.04em 0.16em; margin: -0.12em -0.04em -0.16em;
+}
+.palabra { display: inline-block; transform-origin: 0 100%; }
+
+/* ---------- Aviso de scroll ---------- */
+.pista-scroll {
+  position: fixed; z-index: 46; left: 50%; top: calc(var(--margen) + 8px); translate: -50% 0;
+  display: flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 999px;
+  background: var(--negro); color: var(--blanco); font-size: var(--step-small); font-weight: 500;
+  animation: sube 700ms 600ms var(--curva) both;
+}
+.pista-scroll__rueda { position: relative; width: 16px; height: 24px; border: 2px solid var(--blanco); border-radius: 10px; }
+.pista-scroll__rueda i {
+  position: absolute; left: 50%; top: 4px; width: 2px; height: 5px; margin-left: -1px; border-radius: 2px;
+  background: var(--morado-claro); animation: rueda 1.4s var(--curva) infinite;
+}
+@keyframes sube { from { opacity: 0; transform: translateY(-12px); } }
+@keyframes rueda { 0% { opacity: 0; transform: translateY(-2px); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(9px); } }
+
+/* ---------- Foco de color: el farol en blanco y negro, a color al pasar el mouse ---------- */
+.foco video { filter: grayscale(1) contrast(1.15); transition: filter 700ms var(--curva); }
+.foco.encendido video { filter: none; }
+
+/* ---------- Cursor: punto y aro ---------- */
+.con-cursor, .con-cursor * { cursor: none !important; }
+.cursor { position: fixed; inset: 0 auto auto 0; z-index: 100; pointer-events: none; opacity: 0; transition: opacity 300ms; }
+.cursor.visible { opacity: 1; }
+.cursor__punto, .cursor__aro { position: fixed; left: 0; top: 0; }
+.cursor__punto {
+  width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%;
+  background: var(--blanco); box-shadow: 0 0 0 1.5px rgba(0, 0, 0, 0.55);
+}
+.cursor__aro {
+  width: 40px; height: 40px; margin: -20px 0 0 -20px;
+  transition: width 420ms var(--curva), height 420ms var(--curva), margin 420ms var(--curva);
+}
+.cursor__aro svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.cursor__aro ellipse {
+  fill: transparent; stroke: var(--morado-claro); stroke-width: 1.5px; vector-effect: non-scaling-stroke;
+  transition: fill 300ms, stroke 300ms;
+}
+.cursor__texto {
+  position: fixed; left: 0; top: 0; translate: -50% -50%;
+  color: var(--blanco); font-size: 14px; font-weight: 800; white-space: nowrap;
+  opacity: 0; transition: opacity 200ms;
+}
+.cursor[data-estado="enlace"] .cursor__aro { width: 64px; height: 64px; margin: -32px 0 0 -32px; }
+.cursor[data-estado="enlace"] .cursor__aro ellipse { fill: rgba(139, 92, 246, 0.22); }
+.cursor[data-estado="ver"] .cursor__aro,
+.cursor[data-estado="entrar"] .cursor__aro { width: 104px; height: 104px; margin: -52px 0 0 -52px; }
+.cursor[data-estado="ver"] .cursor__aro ellipse,
+.cursor[data-estado="entrar"] .cursor__aro ellipse { fill: var(--morado); stroke: var(--morado); }
+.cursor[data-estado="luz"] .cursor__aro { width: 84px; height: 84px; margin: -42px 0 0 -42px; }
+.cursor[data-estado="luz"] .cursor__aro ellipse { stroke: var(--blanco); }
+.cursor[data-estado="ver"] .cursor__texto,
+.cursor[data-estado="entrar"] .cursor__texto,
+.cursor[data-estado="enlace"] .cursor__texto { opacity: 1; }
+.cursor[data-estado="enlace"] .cursor__texto { font-size: 12px; }
+.cursor[data-estado="ver"] .cursor__punto,
+.cursor[data-estado="entrar"] .cursor__punto { opacity: 0; }
+.cursor.presionado .cursor__aro { width: 30px; height: 30px; margin: -15px 0 0 -15px; }
+
+/* ---------- Grano de película ---------- */
+body::after {
+  content: ""; position: fixed; inset: -50%; z-index: 90; pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  opacity: 0.07;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; }
+}
+
+:lang(ja) :is(.inicio__titulo, .titulo, .maquina__titulo, .estacion__nombre, .neon__letrero) { word-break: keep-all; line-break: strict; }
+:lang(ja) :is(.inicio__titulo, .titulo) { line-height: 1.08; }
+:lang(ja) .neon__letrero { font-size: clamp(44px, 9.5vw, 136px); }
+
+/* ---------- Rendimiento: cada animación corre solo mientras su sesión está en pantalla ---------- */
+.anillo, .codigo-vivo { animation-play-state: paused; }
+[data-sesion="yo"] .anillo,
+[data-sesion="estudio"] .codigo-vivo { animation-play-state: running; }
+
+/* ---------- Pantallas bajitas (laptop con barra del navegador): todo más compacto ---------- */
+@media (min-width: 1024px) and (max-height: 800px) {
+  .sesion--proceso { gap: 8px; padding-top: calc(var(--margen) + 58px); padding-bottom: 14px; }
+  .proceso__cabeza { align-items: center; }
+  .proceso__cabeza .titulo { font-size: 46px; }
+  .manga { gap: 8px; padding: 8px; }
+  .koma { padding: 8px 12px 10px; gap: 2px; }
+  .koma__globo { margin-bottom: 8px; padding: 5px 11px; }
+  .koma__sfx { font-size: 72px; }
+  .dibujo { margin: 0 0 4px; gap: 4px; line-height: 1.45; }
+  .dibujo--codigo, .dibujo--terminal { padding: 7px 10px; }
+  .koma__titulo { font-size: 20px; }
+  .koma__texto { font-size: 14px; line-height: 1.32; }
+  .neon { gap: 14px; }
+  .sesion--contacto { gap: 28px; }
+  .koma__sfx { font-size: 64px; }
+  .dibujo--calendario { grid-template-columns: repeat(30, 1fr); max-width: none; gap: 3px; }
+  .dibujo:not(.dibujo--chat) { font-size: 12px; }
+  .dibujo--chat { font-size: 16px; }
+  .verificador__texto { gap: 8px; }
+  .estacion { padding-top: 8px; }
+  .estacion__nombre { font-size: 40px; }
+  .estacion__linea { margin-top: 6px; padding: 4px 14px; }
+  .verificador__lead { font-size: 14px; line-height: 1.4; }
+  .verificador__clave { margin-top: 4px; padding: 5px 10px; }
+  .banco { min-height: 44px; padding: 5px 22px 5px 10px; gap: 2px; }
+  .banco__logo { height: 20px; }
+  .producto > a, .producto > div { padding: 10px 14px; gap: 3px; }
+  .producto__kanji { width: 36px; font-size: 18px; border-radius: 11px; margin-bottom: 2px; }
+  .producto b { font-size: 17px; }
+  .maquina { padding: 10px; }
+  .maquina__letrero { padding: 8px 18px; margin-bottom: 8px; }
+  .sesion--estudio { gap: 10px clamp(24px, 3vw, 48px); }
+  .estudio__marca { padding: 20px; }
+  .estudio__marca img { width: min(70%, 300px); }
+  .estudio__texto { gap: 10px; }
+  .estudio__texto .titulo { font-size: clamp(32px, 6vh, 56px); }
+  .estudio__frase { font-size: 15px; line-height: 1.4; }
+  .ficha::before { padding: 5px 14px; }
+  .ficha div { padding: 4px 14px; }
+  .estudio__pilares li { padding: 12px 18px; }
+}

@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ronova Studio · Una idea convertida en software</title>
+  <meta name="description" content="Ronova Studio hace páginas web que venden, un verificador para que tu equipo verifique los Pago Móvil sin entrar al banco y agentes de IA que contestan tu Instagram y WhatsApp.">
+  <meta name="theme-color" content="#000000">
+  <!-- Cada idioma tiene su dirección (en/ y ja/ las genera scripts/idiomas.js) -->
+  <link rel="canonical" href="https://ronova-studio.ronovastudio.workers.dev/">
+  <link rel="alternate" hreflang="es" href="https://ronova-studio.ronovastudio.workers.dev/">
+  <link rel="alternate" hreflang="en" href="https://ronova-studio.ronovastudio.workers.dev/en/">
+  <link rel="alternate" hreflang="ja" href="https://ronova-studio.ronovastudio.workers.dev/ja/">
+  <link rel="alternate" hreflang="x-default" href="https://ronova-studio.ronovastudio.workers.dev/">
+  <!-- Vista previa al compartir el enlace (WhatsApp, Instagram, Facebook).
+       Si cambias de dominio, actualiza og:url y og:image con la dirección nueva. -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_VE">
+  <meta property="og:site_name" content="Ronova Studio">
+  <meta property="og:title" content="Ronova Studio · Una idea convertida en software">
+  <meta property="og:description" content="Páginas web que venden, un verificador para verificar pagos sin entrar al banco y agentes de IA que contestan tu Instagram y WhatsApp.">
+  <meta property="og:url" content="https://ronova-studio.ronovastudio.workers.dev/">
+  <meta property="og:image" content="https://ronova-studio.ronovastudio.workers.dev/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Ronova Studio: una idea convertida en software">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="marca/kit/web/favicon.ico" sizes="any">
+  <link rel="icon" href="marca/kit/web/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="marca/kit/web/apple-touch-icon.png">
+  <link rel="manifest" href="marca/kit/web/site.webmanifest">
+  <!-- Cabinet Grotesk (Fontshare, licencia gratuita) guardada en el proyecto -->
+  <link rel="preload" href="fuentes/cabinet-grotesk-800.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/estilos.css">
+  <script>
+    // Decide el modo antes de pintar, para que no salte el diseño.
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      var quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!quieto) d.classList.add('con-intro', 'modo-mundo');
+    })();
+  </script>
+</head>
+<body>
+  <a class="saltar" href="#servicios">Saltar a lo que hacemos</a>
+
+  <header class="barra">
+    <a class="barra__marca" href="#inicio" aria-label="Ronova Studio, inicio">
+      <img class="logo logo--morado" src="marca/kit/svg/ronova-simbolo-blanco.svg" alt="" width="214" height="216">
+      <img class="logo logo--claro" src="marca/kit/svg/ronova-simbolo-color.svg" alt="" width="214" height="216">
+      <img class="logo logo--oscuro" src="marca/kit/svg/ronova-simbolo-color-oscuro.svg" alt="" width="214" height="216">
+    </a>
+    <div class="barra__der">
+      <!-- Idioma: cápsula que se abre a lo ancho en la misma barra con una pastilla morada deslizante (js/app.js) -->
+      <div class="idioma" data-idioma-selector>
+        <button class="idioma__boton" type="button" aria-expanded="false" aria-controls="menu-idioma" aria-label="Cambiar idioma">
+          <svg class="idioma__icono" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.7"/><ellipse cx="10" cy="10" rx="3.4" ry="7.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 10h14" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span class="idioma__actual" data-idioma-actual>ES</span>
+        </button>
+        <ul class="idioma__menu" id="menu-idioma">
+          <li><a href="index.html" lang="es" hreflang="es" data-idioma="es" title="Español" aria-current="true">ES</a></li>
+          <li><a href="en/index.html" lang="en" hreflang="en" data-idioma="en" title="English">EN</a></li>
+          <li><a href="ja/index.html" lang="ja" hreflang="ja" data-idioma="ja" title="日本語">JA</a></li>
+        </ul>
+      </div>
+      <button class="barra__sonido" type="button" aria-pressed="false" aria-label="Música de fondo">
+        <span class="ecualizador" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="barra__sonido-texto">sonido</span>
+      </button>
+      <a class="barra__whatsapp" href="#contacto" data-whatsapp="Hola Ronova Studio, vi su web y quiero hablar de un proyecto." aria-label="Escríbenos por WhatsApp">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.6 21.4l4.7-1.2A9.5 9.5 0 1 0 12 2.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.4c.3-.5.8-.5 1.1 0l.8 1.6c.2.4.1.8-.2 1.1l-.5.5a5.8 5.8 0 0 0 3.3 3.3l.5-.5c.3-.3.7-.4 1.1-.2l1.6.8c.5.3.5.8 0 1.1-.8.6-1.9.9-2.9.6a8.6 8.6 0 0 1-5.4-5.4c-.3-1 0-2.1.6-2.9z" fill="currentColor"/></svg>
+        <span class="barra__whatsapp-texto">escríbenos</span>
+      </a>
+      <button class="barra__menu" type="button" aria-expanded="false" aria-controls="menu">menú</button>
+    </div>
+  </header>
+
+  <div class="menu" id="menu" hidden>
+    <aside class="menu__lado">
+      <img class="menu__logo" src="marca/kit/svg/ronova-vertical-color-oscuro.svg" alt="Ronova Studio" width="677" height="594">
+      <p><b>Una idea convertida en software.</b> Un estudio inspirado en la cultura japonesa, desde Venezuela para todo el mundo.</p>
+      <p class="menu__reloj"><span>Caracas <b data-hora="America/Caracas">--:--</b></span><span lang="ja">東京 <b data-hora="Asia/Tokyo">--:--</b></span></p>
+      <a class="boton boton--morado" href="#contacto" data-whatsapp="Hola Ronova Studio, vi su web y quiero hablar de una idea.">escríbenos por whatsapp</a>
+    </aside>
+    <!-- La red: cada sesión es una neurona conectada a las demás (js/experiencia.js) -->
+    <div class="menu__red">
+      <svg class="menu__conexiones" aria-hidden="true"></svg>
+      <nav class="menu__nav" aria-label="Principal">
+      <a href="#inicio"><span class="menu__num" lang="ja" aria-hidden="true">一</span><span class="menu__nombre"><small>01</small> inicio</span><span class="menu__desc">una idea convertida en software</span></a>
+      <a href="#estudio"><span class="menu__num" lang="ja" aria-hidden="true">二</span><span class="menu__nombre"><small>02</small> ronova studio</span><span class="menu__desc">el estudio y su forma de trabajar</span></a>
+      <a href="#yo"><span class="menu__num" lang="ja" aria-hidden="true">三</span><span class="menu__nombre"><small>03</small> harry gonzález</span><span class="menu__desc">el fundador</span></a>
+      <a href="#servicios"><span class="menu__num" lang="ja" aria-hidden="true">四</span><span class="menu__nombre"><small>04</small> lo que hacemos</span><span class="menu__desc">webs, pagos y agentes de IA</span></a>
+      <a href="#web"><span class="menu__num" lang="ja" aria-hidden="true">五</span><span class="menu__nombre"><small>05</small> páginas web</span><span class="menu__desc">proyectos reales</span></a>
+      <a href="#verificador"><span class="menu__num" lang="ja" aria-hidden="true">六</span><span class="menu__nombre"><small>06</small> verificador</span><span class="menu__desc">pagos sin esperar al dueño</span></a>
+      <a href="#agentes"><span class="menu__num" lang="ja" aria-hidden="true">七</span><span class="menu__nombre"><small>07</small> agentes de ia</span><span class="menu__desc">contestan por ti, a cualquier hora</span></a>
+      <a href="#proceso"><span class="menu__num" lang="ja" aria-hidden="true">八</span><span class="menu__nombre"><small>08</small> cómo trabajamos</span><span class="menu__desc">de la idea a publicarlo</span></a>
+      <a href="#clientes"><span class="menu__num" lang="ja" aria-hidden="true">九</span><span class="menu__nombre"><small>09</small> lo que dicen</span><span class="menu__desc">clientes reales</span></a>
+      <a href="#contacto"><span class="menu__num" lang="ja" aria-hidden="true">十</span><span class="menu__nombre"><small>10</small> hablemos</span><span class="menu__desc">escríbenos</span></a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="camara">
+    <main class="mundo">
+
+      <!-- 1 · INICIO -->
+      <section class="sesion sesion--inicio" id="inicio" data-tono="morado" data-nombre="inicio" aria-labelledby="t-inicio">
+        <div class="escena" aria-hidden="true">
+          <video muted loop playsinline preload="none" poster="video/escenas/neon.webp"><source src="video/escenas/neon.mp4" type="video/mp4"></video>
+        </div>
+        <div class="inicio__campo">
+          <h1 id="t-inicio" class="inicio__titulo">una idea <br class="solo-movil">convertida<br>en software.</h1>
+          <!-- La misma frase, hecha de código: se ve solo bajo el cursor (js/experiencia.js) -->
+          <p class="inicio__titulo inicio__titulo--codigo" aria-hidden="true">una idea <br class="solo-movil">convertida<br>en software.</p>
+          <p class="inicio__vertical" lang="ja" aria-hidden="true">ロノヴァ・スタジオ</p>
+        </div>
+        <figure class="inicio__foto">
+          <video muted loop playsinline preload="auto" poster="video/escenas/farol.webp" width="540" height="720" aria-label="Farol de papel con letras japonesas en una calle de Tokio">
+            <source src="video/escenas/farol.mp4" type="video/mp4">
+          </video>
+        </figure>
+        <div class="inicio__banda">
+          <p>Un sueño grande y una forma de trabajar: la japonesa, donde cada detalle importa. En Ronova Studio le damos forma a tu idea.</p>
+          <a class="boton boton--morado" href="#servicios">ver lo que hacemos</a>
+        </div>
+      </section>
+
+      <!-- 2 · RONOVA STUDIO (BORRADOR en la ficha: confirma los datos en docs/pendientes.md) -->
+      <section class="sesion sesion--estudio" id="estudio" data-tono="claro" data-nombre="ronova studio" aria-labelledby="t-estudio">
+        <!-- El código real de esta página, subiendo despacio (js/experiencia.js) -->
+        <div class="escena escena--codigo" aria-hidden="true"><pre class="codigo-vivo"></pre></div>
+        <figure class="estudio__marca">
+          <img src="marca/kit/svg/ronova-vertical-color-oscuro.svg" alt="Ronova Studio" width="677" height="594">
+          <figcaption lang="ja" aria-hidden="true">ロノヴァ・スタジオ</figcaption>
+        </figure>
+        <div class="estudio__texto">
+          <h2 id="t-estudio" class="titulo">un estudio<br>de software</h2>
+          <p class="estudio__frase">Ronova Studio nace en Venezuela, inspirado en la cultura japonesa y su <span lang="ja-Latn">monozukuri</span>: literalmente "hacer cosas"; en Japón, <em>el orgullo de hacerlas con oficio y cuidado en cada detalle</em>. Hoy hacemos páginas web, herramientas de pago y agentes de IA para negocios reales, con una meta clara: crecer paso a paso hasta ser un gran estudio, abierto a cualquiera que tenga una idea.</p>
+          <dl class="ficha">
+            <div><dt><span lang="ja">誕生</span> nació</dt><dd class="borrador-dato">2026</dd></div>
+            <div><dt><span lang="ja">拠点</span> desde</dt><dd>Venezuela</dd></div>
+            <div><dt><span lang="ja">対象</span> para</dt><dd>todo el mundo</dd></div>
+            <div><dt><span lang="ja">夢</span> sueña con</dt><dd>crear cosas grandes</dd></div>
+            <div><dt><span lang="ja">哲学</span> filosofía</dt><dd><span lang="ja">ものづくり</span> monozukuri</dd></div>
+          </dl>
+        </div>
+        <ul class="estudio__pilares" aria-label="Valores del estudio">
+          <li><span class="valor__kanji" lang="ja">こだわり</span><b>kodawari</b><span>Obsesión por los detalles: nada sale con un "ya está bien".</span></li>
+          <li><span class="valor__kanji" lang="ja">改善</span><b>kaizen</b><span>Mejorar un poco cada día, en cada proyecto y en cada línea de código.</span></li>
+          <li><span class="valor__kanji" lang="ja">おもてなし</span><b>omotenashi</b><span>Hospitalidad japonesa: cuidar a cada persona que llega con una idea.</span></li>
+        </ul>
+      </section>
+
+      <!-- 3 · EL FUNDADOR (PENDIENTE: la foto original en buena calidad, ver docs/pendientes.md) -->
+      <section class="sesion sesion--yo" id="yo" data-tono="oscuro" data-nombre="el fundador" aria-labelledby="t-yo">
+        <figure class="yo__foto">
+          <div class="yo__escena">
+            <svg class="anillos anillos--atras" aria-hidden="true"><defs><linearGradient id="anillo-atras" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#8b5cf6" stop-opacity="0"/><stop offset=".5" stop-color="#8b5cf6" stop-opacity="1"/><stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/></linearGradient><linearGradient id="puntos-atras" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><ellipse class="anillo anillo--marcas" stroke="url(#anillo-atras)"/><ellipse class="anillo anillo--puntos" stroke="url(#puntos-atras)"/></svg>
+            <img class="yo__retrato" src="img/yo.webp" alt="Harry González, fundador de Ronova Studio, con un filtro morado" width="1024" height="1536">
+            <!-- Las herramientas con las que trabajo giran alrededor de la foto -->
+            <svg class="anillos anillos--frente" aria-hidden="true"><defs><linearGradient id="anillo-frente" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#8b5cf6" stop-opacity="0"/><stop offset=".5" stop-color="#8b5cf6" stop-opacity="1"/><stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/></linearGradient><linearGradient id="puntos-frente" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><ellipse class="anillo anillo--marcas" stroke="url(#anillo-frente)"/><ellipse class="anillo anillo--puntos" stroke="url(#puntos-frente)"/></svg>
+            <ul class="orbita" aria-label="Herramientas con las que trabajo">
+            <li class="orbita__item" style="--i: 0; --color: #E34F26"><span class="orbita__chip"><svg viewBox="0 0 24 24" role="img" aria-label="HTML"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.718 10.059.003.23-2.622L5.412 4.41l.698 8.01h9.126l-.326 3.426-2.91.804-2.955-.81-.188-2.11H6.248l.33 4.171L12 19.351l5.379-1.443.744-8.157H8.531z"/></svg></span><span class="orbita__nombre">HTML</span></li>
+            <li class="orbita__item" style="--i: 1; --color: #1572B6"><span class="orbita__chip"><svg viewBox="0 0 24 24" role="img" aria-label="CSS"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.565-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z"/></svg></span><span class="orbita__nombre">CSS</span></li>
+            <li class="orbita__item" style="--i: 2; --color: #F7DF1E"><span class="orbita__chip"><svg viewBox="0 0 24 24" role="img" aria-label="JavaScript"><path d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z"/></svg></span><span class="orbita__nombre">JavaScript</span></li>
+            <li class="orbita__item" style="--i: 3; --color: #3178C6"><span class="orbita__chip"><svg viewBox="0 0 24 24" role="img" aria-label="TypeScript"><path d="M1.125 0C.502 0 0 .502 0 1.125v21.75C0 23.498.502 24 1.125 24h21.75c.623 0 1.125-.502 1.125-1.125V1.125C24 .502 23.498 0 22.875 0zm17.363 9.75c.612 0 1.154.037 1.627.111a6.38 6.38 0 0 1 1.306.34v2.458a3.95 3.95 0 0 0-.643-.361 5.093 5.093 0 0 0-.717-.26 5.453 5.453 0 0 0-1.426-.2c-.3 0-.573.028-.819.086a2.1 2.1 0 0 0-.623.242c-.17.104-.3.229-.393.374a.888.888 0 0 0-.14.49c0 .196.053.373.156.529.104.156.252.304.443.444s.423.276.696.41c.273.135.582.274.926.416.47.197.892.407 1.266.628.374.222.695.473.963.753.268.279.472.598.614.957.142.359.214.776.214 1.253 0 .657-.125 1.21-.373 1.656a3.033 3.033 0 0 1-1.012 1.085 4.38 4.38 0 0 1-1.487.596c-.566.12-1.163.18-1.79.18a9.916 9.916 0 0 1-1.84-.164 5.544 5.544 0 0 1-1.512-.493v-2.63a5.033 5.033 0 0 0 3.237 1.2c.333 0 .624-.03.872-.09.249-.06.456-.144.623-.25.166-.108.29-.234.373-.38a1.023 1.023 0 0 0-.074-1.089 2.12 2.12 0 0 0-.537-.5 5.597 5.597 0 0 0-.807-.444 27.72 27.72 0 0 0-1.007-.436c-.918-.383-1.602-.852-2.053-1.405-.45-.553-.676-1.222-.676-2.005 0-.614.123-1.141.369-1.582.246-.441.58-.804 1.004-1.089a4.494 4.494 0 0 1 1.47-.629 7.536 7.536 0 0 1 1.77-.201zm-15.113.188h9.563v2.166H9.506v9.646H6.789v-9.646H3.375z"/></svg></span><span class="orbita__nombre">TypeScript</span></li>
+            <li class="orbita__item" style="--i: 4; --color: #3776AB"><span class="orbita__chip"><svg viewBox="0 0 24 24" role="img" aria-label="Python"><path d="M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98l-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95l.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25l-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"/></svg></span><span class="orbita__nombre">Python</span></li>
+            <li class="orbita__item" style="--i: 5; --color: #D97757"><span class="orbita__chip"><svg viewBox="0 0 24 24" role="img" aria-label="Claude"><path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg></span><span class="orbita__nombre">Claude</span></li>
+            <li class="orbita__item" style="--i: 6; --color: #FCC624"><span class="orbita__chip"><svg viewBox="0 0 24 24" role="img" aria-label="Linux"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 00-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368.026-2.152.236-6.133-3.544-6.139zm.529 3.405h.013c.213 0 .396.062.584.198.19.135.33.332.438.533.105.259.158.459.166.724 0-.02.006-.04.006-.06v.105a.086.086 0 01-.004-.021l-.004-.024a1.807 1.807 0 01-.15.706.953.953 0 01-.213.335.71.71 0 00-.088-.042c-.104-.045-.198-.064-.284-.133a1.312 1.312 0 00-.22-.066c.05-.06.146-.133.183-.198.053-.128.082-.264.088-.402v-.02a1.21 1.21 0 00-.061-.4c-.045-.134-.101-.2-.183-.333-.084-.066-.167-.132-.267-.132h-.016c-.093 0-.176.03-.262.132a.8.8 0 00-.205.334 1.18 1.18 0 00-.09.4v.019c.002.089.008.179.02.267-.193-.067-.438-.135-.607-.202a1.635 1.635 0 01-.018-.2v-.02a1.772 1.772 0 01.15-.768c.082-.22.232-.406.43-.533a.985.985 0 01.594-.2zm-2.962.059h.036c.142 0 .27.048.399.135.146.129.264.288.344.465.09.199.14.4.153.667v.004c.007.134.006.2-.002.266v.08c-.03.007-.056.018-.083.024-.152.055-.274.135-.393.2.012-.09.013-.18.003-.267v-.015c-.012-.133-.04-.2-.082-.333a.613.613 0 00-.166-.267.248.248 0 00-.183-.064h-.021c-.071.006-.13.04-.186.132a.552.552 0 00-.12.27.944.944 0 00-.023.33v.015c.012.135.037.2.08.334.046.134.098.2.166.268.01.009.02.018.034.024-.07.057-.117.07-.176.136a.304.304 0 01-.131.068 2.62 2.62 0 01-.275-.402 1.772 1.772 0 01-.155-.667 1.759 1.759 0 01.08-.668 1.43 1.43 0 01.283-.535c.128-.133.26-.2.418-.2zm1.37 1.706c.332 0 .733.065 1.216.399.293.2.523.269 1.052.468h.003c.255.136.405.266.478.399v-.131a.571.571 0 01.016.47c-.123.31-.516.643-1.063.842v.002c-.268.135-.501.333-.775.465-.276.135-.588.292-1.012.267a1.139 1.139 0 01-.448-.067 3.566 3.566 0 01-.322-.198c-.195-.135-.363-.332-.612-.465v-.005h-.005c-.4-.246-.616-.512-.686-.71-.07-.268-.005-.47.193-.6.224-.135.38-.271.483-.336.104-.074.143-.102.176-.131h.002v-.003c.169-.202.436-.47.839-.601.139-.036.294-.065.466-.065zm2.8 2.142c.358 1.417 1.196 3.475 1.735 4.473.286.534.855 1.659 1.102 3.024.156-.005.33.018.513.064.646-1.671-.546-3.467-1.089-3.966-.22-.2-.232-.335-.123-.335.59.534 1.365 1.572 1.646 2.757.13.535.16 1.104.021 1.67.067.028.135.06.205.067 1.032.534 1.413.938 1.23 1.537v-.043c-.06-.003-.12 0-.18 0h-.016c.151-.467-.182-.825-1.065-1.224-.915-.4-1.646-.336-1.77.465-.008.043-.013.066-.018.135-.068.023-.139.053-.209.064-.43.268-.662.669-.793 1.187-.13.533-.17 1.156-.205 1.869v.003c-.02.334-.17.838-.319 1.35-1.5 1.072-3.58 1.538-5.348.334a2.645 2.645 0 00-.402-.533 1.45 1.45 0 00-.275-.333c.182 0 .338-.03.465-.067a.615.615 0 00.314-.334c.108-.267 0-.697-.345-1.163-.345-.467-.931-.995-1.788-1.521-.63-.4-.986-.87-1.15-1.396-.165-.534-.143-1.085-.015-1.645.245-1.07.873-2.11 1.274-2.763.107-.065.037.135-.408.974-.396.751-1.14 2.497-.122 3.854a8.123 8.123 0 01.647-2.876c.564-1.278 1.743-3.504 1.836-5.268.048.036.217.135.289.202.218.133.38.333.59.465.21.201.477.335.876.335.039.003.075.006.11.006.412 0 .73-.134.997-.268.29-.134.52-.334.74-.4h.005c.467-.135.835-.402 1.044-.7zm2.185 8.958c.037.6.343 1.245.882 1.377.588.134 1.434-.333 1.791-.765l.211-.01c.315-.007.577.01.847.268l.003.003c.208.199.305.53.391.876.085.4.154.78.409 1.066.486.527.645.906.636 1.14l.003-.007v.018l-.003-.012c-.015.262-.185.396-.498.595-.63.401-1.746.712-2.457 1.57-.618.737-1.37 1.14-2.036 1.191-.664.053-1.237-.2-1.574-.898l-.005-.003c-.21-.4-.12-1.025.056-1.69.176-.668.428-1.344.463-1.897.037-.714.076-1.335.195-1.814.12-.465.308-.797.641-.984l.045-.022zm-10.814.049h.01c.053 0 .105.005.157.014.376.055.706.333 1.023.752l.91 1.664.003.003c.243.533.754 1.064 1.189 1.637.434.598.77 1.131.729 1.57v.006c-.057.744-.48 1.148-1.125 1.294-.645.135-1.52.002-2.395-.464-.968-.536-2.118-.469-2.857-.602-.369-.066-.61-.2-.723-.4-.11-.2-.113-.602.123-1.23v-.004l.002-.003c.117-.334.03-.752-.027-1.118-.055-.401-.083-.71.043-.94.16-.334.396-.4.69-.533.294-.135.64-.202.915-.47h.002v-.002c.256-.268.445-.601.668-.838.19-.201.38-.336.663-.336zm7.159-9.074c-.435.201-.945.535-1.488.535-.542 0-.97-.267-1.28-.466-.154-.134-.28-.268-.373-.335-.164-.134-.144-.333-.074-.333.109.016.129.134.199.2.096.066.215.2.36.333.292.2.68.467 1.167.467.485 0 1.053-.267 1.398-.466.195-.135.445-.334.648-.467.156-.136.149-.267.279-.267.128.016.034.134-.147.332a8.097 8.097 0 01-.69.468zm-1.082-1.583V5.64c-.006-.02.013-.042.029-.05.074-.043.18-.027.26.004.063 0 .16.067.15.135-.006.049-.085.066-.135.066-.055 0-.092-.043-.141-.068-.052-.018-.146-.008-.163-.065zm-.551 0c-.02.058-.113.049-.166.066-.047.025-.086.068-.14.068-.05 0-.13-.02-.136-.068-.01-.066.088-.133.15-.133.08-.031.184-.047.259-.005.019.009.036.03.03.05v.02h.003z"/></svg></span><span class="orbita__nombre">Linux</span></li>
+            <li class="orbita__item" style="--i: 7; --color: #F38020"><span class="orbita__chip"><svg viewBox="0 0 24 24" role="img" aria-label="Cloudflare"><path d="M16.5088 16.8447c.1475-.5068.0908-.9707-.1553-1.3154-.2246-.3164-.6045-.499-1.0615-.5205l-8.6592-.1123a.1559.1559 0 0 1-.1333-.0713c-.0283-.042-.0351-.0986-.021-.1553.0278-.084.1123-.1484.2036-.1562l8.7359-.1123c1.0351-.0489 2.1601-.8868 2.5537-1.9136l.499-1.3013c.0215-.0561.0293-.1128.0147-.168-.5625-2.5463-2.835-4.4453-5.5499-4.4453-2.5039 0-4.6284 1.6177-5.3876 3.8614-.4927-.3658-1.1187-.5625-1.794-.499-1.2026.119-2.1665 1.083-2.2861 2.2856-.0283.31-.0069.6128.0635.894C1.5683 13.171 0 14.7754 0 16.752c0 .1748.0142.3515.0352.5273.0141.083.0844.1475.1689.1475h15.9814c.0909 0 .1758-.0645.2032-.1553l.12-.4268zm2.7568-5.5634c-.0771 0-.1611 0-.2383.0112-.0566 0-.1054.0415-.127.0976l-.3378 1.1744c-.1475.5068-.0918.9707.1543 1.3164.2256.3164.6055.498 1.0625.5195l1.8437.1133c.0557 0 .1055.0263.1329.0703.0283.043.0351.1074.0214.1562-.0283.084-.1132.1485-.204.1553l-1.921.1123c-1.041.0488-2.1582.8867-2.5527 1.914l-.1406.3585c-.0283.0713.0215.1416.0986.1416h6.5977c.0771 0 .1474-.0489.169-.126.1122-.4082.1757-.837.1757-1.2803 0-2.6025-2.125-4.727-4.7344-4.727"/></svg></span><span class="orbita__nombre">Cloudflare</span></li>
+            <li class="orbita__item" style="--i: 8; --color: #FFFFFF"><span class="orbita__chip"><svg viewBox="0 0 24 24" role="img" aria-label="GitHub"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></span><span class="orbita__nombre">GitHub</span></li>
+            </ul>
+          </div>
+        </figure>
+        <div class="yo__texto">
+          <!-- Igual que la frase del inicio: bajo el cursor, el nombre se ve hecho de código -->
+          <div class="revela">
+            <h2 id="t-yo" class="titulo yo__titulo">harry gonzález</h2>
+            <p class="titulo yo__titulo revela__codigo" aria-hidden="true">harry gonzález</p>
+          </div>
+          <p class="yo__frase">Fundador de Ronova Studio, estudiante de Ciencias de la Computación en la UCV y un chico muy autodidacta: casi todo lo que sé lo aprendí por mi cuenta.</p>
+          <p>Amo los videojuegos, y de uno de ellos viene el nombre Ronova. Lo japonés viene de dos distribuciones de Linux que uso, inspiradas en Japón y <em class="yo__japon">hechas con tanto cuidado que se sienten perfectas</em>. Eso busco en todo lo que hago. Mi sueño es que Ronova Studio llegue a ser un lugar lleno de gente creando cosas grandes.</p>
+          <ul class="yo__datos" aria-label="Datos">
+            <li>Computación · UCV</li>
+            <li>autodidacta</li>
+            <li>gamer</li>
+            <li>linuxero</li>
+            <li>21 años</li>
+          </ul>
+          <div class="yo__acciones">
+            <a class="boton boton--blanco" href="#web">mira lo que he hecho <span aria-hidden="true">→</span></a>
+            <a class="boton boton--borde" href="#contacto" data-whatsapp="Hola Harry, vi tu web y quiero hablar de una idea.">escríbeme</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 · LO QUE HACEMOS: una máquina expendedora japonesa (自販機). Para agregar un servicio, copia un <li>. -->
+      <section class="sesion sesion--servicios" id="servicios" data-tono="morado" data-nombre="lo que hacemos" aria-labelledby="t-servicios">
+        <div class="maquina">
+          <!-- El letrero luminoso de la máquina es el título de la sesión -->
+          <div class="maquina__letrero">
+            <p class="maquina__marca" lang="ja" aria-hidden="true">ロノ自販機</p>
+            <h2 id="t-servicios" class="maquina__titulo">lo que hacemos</h2>
+            <p class="servicios__leyenda"><span class="lampara lampara--si"></span> disponible <span class="lampara lampara--no"></span> próximamente</p>
+          </div>
+          <ul class="maquina__vitrina">
+            <li class="producto"><a href="#web"><span class="producto__kanji" lang="ja" aria-hidden="true">網</span><b>páginas web</b><span class="producto__desc">Webs hechas a medida que venden desde el celular.</span><span class="producto__estado"><span class="lampara lampara--si"></span><span lang="ja">販売中</span> disponible</span></a></li>
+            <li class="producto"><a href="#verificador"><span class="producto__kanji" lang="ja" aria-hidden="true">確</span><b>verificador de pagos</b><span class="producto__desc">Tu equipo verifica cada Pago Móvil sin entrar al banco.</span><span class="producto__estado"><span class="lampara lampara--si"></span><span lang="ja">販売中</span> disponible</span></a></li>
+            <li class="producto"><a href="#agentes"><span class="producto__kanji" lang="ja" aria-hidden="true">話</span><b>agentes de IA</b><span class="producto__desc">Contestan tu Instagram y tu WhatsApp a cualquier hora.</span><span class="producto__estado"><span class="lampara lampara--si"></span><span lang="ja">販売中</span> disponible</span></a></li>
+            <li class="producto producto--pronto"><div><span class="producto__kanji" lang="ja" aria-hidden="true">遊</span><svg class="producto__candado" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="4.5" y="10" width="15" height="11" rx="3" fill="currentColor"/></svg><b>juegos en Roblox</b><span class="producto__desc">Mundos para jugar con amigos.</span><span class="producto__estado"><span class="lampara lampara--no"></span><span lang="ja">準備中</span> próximamente</span></div></li>
+            <li class="producto producto--pronto"><div><span class="producto__kanji" lang="ja" aria-hidden="true">語</span><svg class="producto__candado" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="4.5" y="10" width="15" height="11" rx="3" fill="currentColor"/></svg><b>novelas visuales</b><span class="producto__desc">Historias interactivas hechas con Ren'Py.</span><span class="producto__estado"><span class="lampara lampara--no"></span><span lang="ja">準備中</span> próximamente</span></div></li>
+            <li class="producto producto--pronto"><div><span class="producto__kanji" lang="ja" aria-hidden="true">管</span><svg class="producto__candado" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="4.5" y="10" width="15" height="11" rx="3" fill="currentColor"/></svg><b>sistemas para negocios</b><span class="producto__desc">Inventario, clientes y reportes en un solo lugar.</span><span class="producto__estado"><span class="lampara lampara--no"></span><span lang="ja">準備中</span> próximamente</span></div></li>
+            <li class="producto producto--pronto"><div><span class="producto__kanji" lang="ja" aria-hidden="true">店</span><svg class="producto__candado" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="4.5" y="10" width="15" height="11" rx="3" fill="currentColor"/></svg><b>sistema para abastos</b><span class="producto__desc">Cobra en bolívares y dólares, controla el inventario y cierra la caja del día.</span><span class="producto__estado"><span class="lampara lampara--no"></span><span lang="ja">準備中</span> próximamente</span></div></li>
+            <li class="producto producto--idea"><a href="#contacto"><span class="producto__kanji" lang="ja" aria-hidden="true">夢</span><b>¿tu idea?</b><span class="producto__desc">Si no está en la máquina, cuéntanosla y la construimos.</span><span class="producto__estado">hablemos →</span></a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 5 · PÁGINAS WEB: cartas coleccionables. Cada proyecto es una carta; al tocarla se voltea y muestra la web.
+           Para agregar un proyecto, copia un <li class="carta"> con su captura completa en img/portafolio/. -->
+      <section class="sesion sesion--trabajo" id="web" data-tono="oscuro" data-nombre="páginas web" aria-labelledby="t-web">
+        <div class="trabajo__lista">
+          <h2 id="t-web" class="titulo">páginas web</h2>
+          <p class="trabajo__lead">Cada proyecto es una carta de la colección. Tócala para voltearla y ver la web por dentro.</p>
+          <p class="trabajo__coleccion"><b data-total>2</b> cartas en la colección · <b>1</b> por descubrir</p>
+          <a class="boton boton--morado trabajo__boton" href="https://web.ronovastudio.workers.dev" target="_blank" rel="noopener">ver paquetes y precios <span>→</span></a>
+          <div class="cartas__flechas" hidden>
+            <button type="button" class="cartas__flecha" data-dir="-1" aria-label="Cartas anteriores">←</button>
+            <button type="button" class="cartas__flecha" data-dir="1" aria-label="Más cartas">→</button>
+          </div>
+        </div>
+        <ul class="cartas">
+            <li class="carta">
+              <button type="button" class="carta__giro" aria-pressed="false" aria-label="Voltear la carta de yosnier barber para ver su web por dentro">
+                <span class="carta__cara carta__frente">
+                  <span class="carta__cabeza"><b>yosnier barber</b><span class="carta__kanji" lang="ja">理</span></span>
+                  <span class="carta__arte"><img src="img/portafolio/yosnier-barber-demo-completa.webp" alt="Portada de la web de Yosnier Barber" width="960" height="6000"></span>
+                  <span class="carta__tipo">barbería a domicilio · Caracas</span>
+                  <span class="carta__texto">Cortes a domicilio en toda Caracas: zonas, precios y reserva en un solo lugar.</span>
+                  <span class="carta__pie"><span>Nº 001</span><span>RONOVA · 2026</span></span>
+                  <span class="carta__holo" aria-hidden="true"></span>
+                </span>
+                <span class="carta__cara carta__reverso">
+                  <span class="carta__pantalla"><img src="img/portafolio/yosnier-barber-demo-completa.webp" alt="" width="960" height="6000"></span>
+                  <span class="carta__volver">toca para voltear</span>
+                </span>
+              </button>
+            </li>
+            <li class="carta">
+              <button type="button" class="carta__giro" aria-pressed="false" aria-label="Voltear la carta de dra. marjorie díaz para ver su web por dentro">
+                <span class="carta__cara carta__frente">
+                  <span class="carta__cabeza"><b>dra. marjorie díaz</b><span class="carta__kanji" lang="ja">医</span></span>
+                  <span class="carta__arte"><img src="img/portafolio/dra-marjorie-diaz-completa.webp" alt="Portada de la web de la Dra. Marjorie Díaz" width="960" height="6000"></span>
+                  <span class="carta__tipo">pediatría y estética · Puerto Colombia</span>
+                  <span class="carta__texto">Dos consultas en una web: pediatría y medicina estética, con citas por WhatsApp.</span>
+                  <span class="carta__pie"><span>Nº 002</span><span>RONOVA · 2026</span></span>
+                  <span class="carta__holo" aria-hidden="true"></span>
+                </span>
+                <span class="carta__cara carta__reverso">
+                  <span class="carta__pantalla"><img src="img/portafolio/dra-marjorie-diaz-completa.webp" alt="" width="960" height="6000"></span>
+                  <span class="carta__volver">toca para voltear</span>
+                </span>
+              </button>
+            </li>
+            <li class="carta carta--tuya">
+              <button type="button" class="carta__giro" aria-pressed="false" aria-label="Voltear la carta de la tuya">
+                <span class="carta__cara carta__frente">
+                  <span class="carta__cabeza"><b>la tuya</b><span class="carta__kanji" lang="ja">夢</span></span>
+                  <!-- Una mini página de ejemplo, hecha en HTML: así se vería la tuya -->
+                  <span class="carta__arte mini" aria-hidden="true">
+                    <span class="mini__nav"><i class="mini__logo"></i><i></i><i></i><i></i></span>
+                    <span class="mini__hero">
+                      <span class="mini__titulo">la tuya</span>
+                      <span class="mini__lineas"><i></i><i></i></span>
+                      <span class="mini__boton">escríbenos</span>
+                    </span>
+                    <span class="mini__bloques"><i></i><i></i><i></i></span>
+                  </span>
+                  <span class="carta__tipo">tu negocio · donde estés</span>
+                  <span class="carta__texto">Una web hecha a tu medida, con tu marca y lista para vender desde el celular.</span>
+                  <span class="carta__pie"><span>Nº ???</span><span>carta legendaria</span></span>
+                  <span class="carta__holo" aria-hidden="true"></span>
+                </span>
+                <span class="carta__cara carta__reverso carta__reverso--tuya">
+                  <span class="carta__cabeza"><b>la tuya</b><span class="carta__kanji" lang="ja">夢</span></span>
+                  <span class="carta__invitacion">Esta carta todavía no existe.<br><b>¿La creamos?</b></span>
+                  <span class="carta__pie"><span>Nº ???</span><span>carta legendaria</span></span>
+                </span>
+              </button>
+              <a class="boton boton--blanco carta__accion" href="https://web.ronovastudio.workers.dev" target="_blank" rel="noopener">quiero mi carta <span>→</span></a>
+            </li>
+        </ul>
+      </section>
+
+      <!-- 6 · VERIFICADOR: el torniquete de una estación de Tokio (改札). -->
+      <section class="sesion sesion--verificador" id="verificador" data-tono="morado" data-nombre="verificador" aria-labelledby="t-verificador">
+        <div class="verificador__texto">
+          <!-- El título es un letrero de estación de Tokio (駅名標) -->
+          <div class="estacion">
+            <span class="estacion__kanji" lang="ja" aria-hidden="true">確認済</span>
+            <h2 id="t-verificador" class="estacion__nombre">cada pago, verificado</h2>
+            <span class="estacion__linea" aria-hidden="true"><b>六</b></span>
+          </div>
+          <p class="verificador__lead">En muchos negocios solo el dueño entra al banco, y cada Pago Móvil se queda esperando a que lo revise. Con nuestro verificador, tu equipo verifica el pago al momento desde la web o por WhatsApp, sin acceso al banco y sin molestarte. <b class="verificador__clave">Nadie entrega nada sin antes comprobar que el pago llegó de verdad.</b></p>
+          <!-- Los bancos con su logo y su color (logos: Wikimedia Commons y Simple Icons; son marcas de sus dueños) -->
+          <ul class="bancos" aria-label="Bancos">
+            <li class="banco banco--activo" style="--c: #e2262d"><span class="banco__logo"><img src="img/bancos/bdv.svg" alt="Banco de Venezuela" height="24" loading="lazy"></span><small>activo</small></li>
+            <li class="banco" style="--c: #1464a5"><span class="banco__logo"><img src="img/bancos/provincial.svg" alt="BBVA Provincial" height="24" loading="lazy"></span><small>próximamente</small></li>
+            <li class="banco" style="--c: #1f6fc4"><span class="banco__logo"><img src="img/bancos/mercantil.svg" alt="Mercantil" height="24" loading="lazy"></span><small>próximamente</small></li>
+            <li class="banco" style="--c: #1f9d55"><span class="banco__logo"><img src="img/bancos/banesco.svg" alt="Banesco" height="24" loading="lazy"></span><small>próximamente</small></li>
+            <li class="banco" style="--c: #12a0a0"><span class="banco__logo"><img src="img/bancos/venezolano.png" alt="Venezolano de Crédito" height="24" loading="lazy"></span><small>próximamente</small></li>
+            <li class="banco" style="--c: #e0a21a"><span class="banco__logo"><img src="img/bancos/bicentenario.png" alt="Bicentenario" height="24" loading="lazy"></span><small>próximamente</small></li>
+            <li class="banco banco--activo" style="--c: #f0b90b"><span class="banco__logo"><img src="img/bancos/binance.svg" alt="Binance" height="24" loading="lazy"> <span class="banco__nombre">Binance</span></span><small>activo</small></li>
+          </ul>
+          <p class="canales">verifica desde <span>la web</span><span>WhatsApp</span><span class="canales__pronto">Telegram · pronto</span></p>
+        </div>
+        <div class="torniquete" data-caso="">
+          <div class="torniquete__pantalla" role="status" aria-live="polite">
+            <span class="torniquete__kanji" lang="ja">改札</span>
+            <b class="torniquete__msg">acerca un pago</b>
+            <small class="torniquete__detalle">el verificador revisa el banco cada 2 minutos</small>
+          </div>
+          <div class="torniquete__paso" aria-hidden="true">
+            <span class="torniquete__poste torniquete__poste--izq"><span class="torniquete__lector">IC</span><span class="torniquete__luz"></span></span>
+            <span class="torniquete__aletas"><i></i><i></i></span>
+            <span class="torniquete__poste torniquete__poste--der"><span class="torniquete__luz"></span></span>
+            <span class="ticket"><small>Pago Móvil</small><b class="ticket__ref">Ref 004812</b><span class="ticket__monto">Bs 1.250,00</span><span class="ticket__banco">Banco de Venezuela</span></span>
+          </div>
+          <!-- Tablero de llegadas (発着案内): los pagos que el verificador va revisando. Datos de ejemplo. -->
+          <div class="tablero" aria-hidden="true">
+            <p class="tablero__cabeza"><span lang="ja">着金案内</span> pagos de hoy · ejemplo</p>
+            <ol class="tablero__filas"></ol>
+          </div>
+          <div class="torniquete__botones" role="group" aria-label="Probar el verificador con un pago">
+            <button type="button" data-caso="ok">pago nuevo</button>
+            <button type="button" data-caso="usado">referencia repetida</button>
+            <button type="button" data-caso="no">pago que no llegó</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 · AGENTES DE IA: un konbini (コンビニ) de Tokio abierto toda la noche. El chat va detrás del vidrio. -->
+      <section class="sesion sesion--agentes" id="agentes" data-tono="oscuro" data-nombre="agentes de ia" aria-labelledby="t-agentes">
+        <div class="agentes__texto">
+          <h2 id="t-agentes" class="titulo agentes__titulo">tu negocio<br><span class="agentes__neon">nunca cierra</span></h2>
+          <p class="agentes__lead">Un agente de IA atiende tu Instagram y tu WhatsApp a cualquier hora. Tú duermes; <b>él atiende.</b></p>
+          <ul class="agentes__hace">
+            <li><span class="agentes__kanji" lang="ja" aria-hidden="true">答</span><span><b>responde al instante</b>precios, horarios y dudas, como lo harías tú</span></li>
+            <li><span class="agentes__kanji" lang="ja" aria-hidden="true">約</span><span><b>agenda citas</b>reserva el día y la hora sin que muevas un dedo</span></li>
+            <li><span class="agentes__kanji" lang="ja" aria-hidden="true">知</span><span><b>te avisa</b>cuando alguien está listo para comprar</span></li>
+          </ul>
+          <div class="agentes__demo">
+            <span>mira una noche en</span>
+            <div class="agentes__canales" role="group" aria-label="Ver la demostración en">
+              <button type="button" aria-pressed="true" data-canal="whatsapp">whatsapp</button>
+              <button type="button" aria-pressed="false" data-canal="instagram">instagram</button>
+            </div>
+          </div>
+        </div>
+        <div class="konbini">
+          <!-- El letrero de la tienda, con su reloj -->
+          <div class="konbini__letrero">
+            <span class="konbini__horas" lang="ja">24時間</span>
+            <b class="konbini__nombre">RONOVA AGENT</b>
+            <span class="konbini__reloj" aria-label="Hora en la tienda"><span data-reloj>23:58</span><small data-turno>p.m.</small></span>
+          </div>
+          <div class="konbini__toldo" aria-hidden="true"></div>
+          <div class="konbini__vitrina">
+            <span class="konbini__reflejo" aria-hidden="true"></span>
+            <!-- Demostración: la conversación se escribe sola al llegar a la sesión (js/experiencia.js) -->
+            <div class="chat" aria-label="Ejemplo de conversación con un agente de IA">
+              <div class="chat__cabeza"><span class="chat__avatar" aria-hidden="true">ロ</span><span><b>tu negocio</b><small class="chat__estado">en línea</small></span></div>
+              <ol class="chat__mensajes" aria-live="polite"></ol>
+            </div>
+            <p class="konbini__abierto"><span class="lampara lampara--si"></span> abierto</p>
+          </div>
+          <p class="konbini__contador"><b data-atendidos>0</b> clientes atendidos esta noche</p>
+        </div>
+      </section>
+
+      <!-- 8 · CÓMO TRABAJAMOS: una página de manga (6 viñetas). Sirve para webs, agentes y cualquier software. -->
+      <section class="sesion sesion--proceso" id="proceso" data-tono="claro" data-nombre="cómo trabajamos" aria-labelledby="t-proceso">
+        <div class="proceso__cabeza">
+          <h2 id="t-proceso" class="titulo">cómo trabajamos</h2>
+          <div class="proceso__notas">
+            <p class="proceso__pago"><b>Pagos:</b> Pago Móvil, transferencia, Binance o efectivo.</p>
+          </div>
+        </div>
+        <ol class="manga">
+          <li class="proceso__paso koma koma--1">
+            <span class="koma__num">1</span>
+            <span class="koma__sfx" lang="ja" aria-hidden="true">話</span>
+            <p class="koma__globo">¡Hola! Tengo una idea…</p>
+            <div class="dibujo dibujo--chat" aria-hidden="true"><span class="d-msj d-msj--el">quiero vender por internet</span><span class="d-msj d-msj--yo">¡hagámoslo! ¿qué vendes?</span><span class="d-msj d-msj--el">ropa y accesorios 👕</span></div>
+            <h3 class="koma__titulo">hablamos</h3>
+            <p class="koma__texto">Nos cuentas tu idea, a quién le vendes y qué necesitas. Sin compromiso.</p><ul class="koma__canales" aria-label="Canales"><li style="--c: #25D366"><svg viewBox="0 0 24 24" role="img" aria-label="WhatsApp"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></li><li style="--c: #E4405F"><svg viewBox="0 0 24 24" role="img" aria-label="Instagram"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg></li><li style="--c: #26A5E4"><svg viewBox="0 0 24 24" role="img" aria-label="Telegram"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></li><li style="--c: #5865F2"><svg viewBox="0 0 24 24" role="img" aria-label="Discord"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></li></ul>
+          </li>
+          <li class="proceso__paso koma koma--2">
+            <span class="koma__num">2</span>
+            <span class="koma__sfx" lang="ja" aria-hidden="true">案</span>
+            <p class="koma__globo">¿Qué colores y estilo te gustan?</p>
+            <div class="dibujo dibujo--codigo" aria-hidden="true"><code><i class="c-k">const</i> marca = {<br>&nbsp;&nbsp;colores: [<span class="d-color" style="--c:#6d28d9"></span><span class="d-color" style="--c:#0b0814"></span><span class="d-color" style="--c:#f6f0ff"></span>],<br>&nbsp;&nbsp;estilo: <i class="c-s">'moderno'</i>,<br>};</code></div>
+            <h3 class="koma__titulo">te conocemos y proponemos</h3>
+            <p class="koma__texto">Un cuestionario corto sobre tu marca y después una propuesta clara: qué incluye, cuánto cuesta y cuándo está.</p>
+          </li>
+          <li class="proceso__paso koma koma--3">
+            <span class="koma__num">3</span>
+            <span class="koma__sfx" lang="ja" aria-hidden="true">始</span>
+            <p class="koma__globo">¡Manos a la obra!</p>
+            <div class="dibujo dibujo--pago" aria-hidden="true"><code><i class="c-c">// anticipo</i></code><span class="d-barra"><i></i></span><code class="d-pct">50% <i class="c-ok">✓ recibido</i></code></div>
+            <h3 class="koma__titulo">anticipo y arrancamos</h3>
+            <p class="koma__texto">Con el 50 % por adelantado empezamos tu proyecto.</p>
+          </li>
+          <li class="proceso__paso koma koma--4">
+            <span class="koma__num">4</span>
+            <span class="koma__sfx" lang="ja" aria-hidden="true">作</span>
+            <p class="koma__globo">¿Así te gusta?</p>
+            <div class="dibujo dibujo--codigo" aria-hidden="true"><code><i class="c-k">function</i> <i class="c-f">tuProyecto</i>() {<br>&nbsp;&nbsp;<i class="c-k">return</i> <i class="c-s">'a tu medida'</i>;<span class="d-cursor"></span><br>}</code></div>
+            <h3 class="koma__titulo">lo construimos y lo pruebas</h3>
+            <p class="koma__texto">Ves el avance en una versión de prueba privada. Incluye 2 rondas de cambios.</p>
+          </li>
+          <li class="proceso__paso koma koma--5">
+            <span class="koma__num">5</span>
+            <span class="koma__sfx" lang="ja" aria-hidden="true">発</span>
+            <p class="koma__globo">¡Ya está en vivo!</p>
+            <div class="dibujo dibujo--terminal" aria-hidden="true"><code><i class="c-c">$</i> deploy<br><i class="c-ok">✓</i> subiendo archivos…<br><i class="c-ok">✓ en vivo</i> → tuproyecto.com</code></div>
+            <h3 class="koma__titulo">lanzamos</h3>
+            <p class="koma__texto">Pagas el otro 50 %, tu proyecto sale al mundo y te enseñamos a usarlo.</p>
+          </li>
+          <li class="proceso__paso koma koma--6">
+            <span class="koma__num">6</span>
+            <span class="koma__sfx" lang="ja" aria-hidden="true">伴</span>
+            <p class="koma__globo">Cualquier cosa, nos escribes.</p>
+            <div class="dibujo dibujo--calendario" aria-hidden="true"><i class="hecho"></i><i class="hecho"></i><i class="hecho"></i><i class="hecho"></i><i class="hecho"></i><i class="hecho"></i><i class="hecho"></i><i class="hecho"></i><i class="hecho"></i><i class="hecho"></i><i class="hecho"></i><i class="hecho"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
+            <h3 class="koma__titulo">te acompañamos</h3>
+            <p class="koma__texto">30 días de soporte incluidos. Después, mantenimiento o mensualidad si tu servicio lo lleva.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- 9 · LO QUE DICEN: cartas de papel washi firmadas con sello hanko (印鑑).
+           BORRADOR: cambia cada frase por la real de tu cliente, con su permiso. Para sumar una reseña, copia un <li class="washi">. -->
+      <section class="sesion sesion--clientes" id="clientes" data-tono="oscuro" data-nombre="lo que dicen" aria-labelledby="t-clientes">
+        <div class="clientes__texto">
+          <p class="clientes__kanji" lang="ja" aria-hidden="true">お客様の声</p>
+          <h2 id="t-clientes" class="titulo">lo que<br>dicen</h2>
+          <p class="clientes__lead">Cartas de quienes ya trabajaron con nosotros, firmadas con su propio sello.</p>
+          <div class="clientes__mando">
+            <button type="button" class="clientes__flecha" data-dir="-1" aria-label="Carta anterior">←</button>
+            <p class="clientes__cuenta" aria-live="polite"><b data-actual>001</b> / <span data-total>003</span></p>
+            <button type="button" class="clientes__flecha" data-dir="1" aria-label="Carta siguiente">→</button>
+          </div>
+        </div>
+        <div class="buzon">
+          <ul class="buzon__pila" aria-label="Reseñas de clientes">
+            <li class="washi" data-n="001">
+              <p class="washi__fecha"><span lang="ja">令和八年</span> · 2026</p>
+              <blockquote class="washi__frase borrador">Aquí va, con sus propias palabras, lo que Yosnier diga de trabajar con Ronova.</blockquote>
+              <div class="washi__firma">
+                <img src="img/portafolio/yosnier-barber-demo.jpg" alt="" width="96" height="96" loading="lazy">
+                <p><b>Yosnier</b>Barbería a domicilio · Caracas</p>
+                <span class="hanko" aria-hidden="true">Y</span>
+              </div>
+            </li>
+            <li class="washi" data-n="002">
+              <p class="washi__fecha"><span lang="ja">令和八年</span> · 2026</p>
+              <blockquote class="washi__frase borrador">Aquí va, con sus propias palabras, lo que la Dra. Marjorie diga de trabajar con Ronova.</blockquote>
+              <div class="washi__firma">
+                <img src="img/portafolio/dra-marjorie-diaz.jpg" alt="" width="96" height="96" loading="lazy">
+                <p><b>Dra. Marjorie Díaz</b>Pediatría y estética · Puerto Colombia</p>
+                <span class="hanko" aria-hidden="true">M</span>
+              </div>
+            </li>
+            <li class="washi washi--tuya" data-n="???">
+              <p class="washi__fecha"><span lang="ja">次は</span> la próxima</p>
+              <p class="washi__frase">Esta carta todavía está en blanco. <b>La próxima idea convertida en software puede ser la tuya.</b></p>
+              <div class="washi__firma">
+                <a class="boton boton--morado" href="#contacto">escríbenos</a>
+                <span class="hanko hanko--vacio" aria-hidden="true">?</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 8 · FINAL -->
+      <section class="sesion sesion--contacto" id="contacto" data-tono="oscuro" data-nombre="hablemos" aria-labelledby="t-contacto">
+        <div class="neon">
+          <p class="neon__japones" lang="ja" aria-hidden="true">話そう</p>
+          <h2 id="t-contacto" class="neon__letrero">hablemos</h2>
+          <p class="neon__frase"><b>¿Tienes una idea? Ronova la convierte en software.</b> Cuéntanosla: te contestamos nosotros, no un formulario.</p>
+          <!-- WhatsApp grande y, debajo, los otros tres canales ocupando el mismo ancho. Enlaces en js/config.js -->
+          <div class="neon__acciones">
+            <a class="canal canal--whatsapp" href="#contacto" data-whatsapp="Hola Ronova Studio, vi su web y quiero hablar de un proyecto."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg><span>escríbenos por whatsapp</span></a>
+            <div class="canales-red">
+              <a class="canal canal--instagram" href="#contacto" data-red="instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg><span>instagram</span></a>
+              <a class="canal canal--telegram" href="#contacto" data-red="telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg><span>telegram</span></a>
+              <a class="canal canal--discord" href="#contacto" data-red="discord"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg><span>discord</span></a>
+            </div>
+          </div>
+        </div>
+        <footer class="pie">
+          <img src="marca/kit/svg/ronova-horizontal-blanco.svg" alt="Ronova Studio" width="931" height="216" loading="lazy">
+          <p class="pie__creditos">Videos: <a href="https://mixkit.co/">Mixkit</a>. Logos de bancos: <a href="https://commons.wikimedia.org/">Wikimedia Commons</a> (Venezolano de Crédito y Bicentenario, CC BY-SA 4.0) y Simple Icons; son marcas de sus dueños. Hecho a mano en Venezuela, con Tokio en la cabeza.</p>
+          <p class="pie__ano">© 2026 Ronova Studio · una idea convertida en software</p>
+        </footer>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/textos.js"></script>
+  <script src="js/logo.js"></script>
+  <script src="js/sonido.js"></script>
+  <script src="js/coreografia.js"></script>
+  <script src="js/mundo.js"></script>
+  <script src="js/intro.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/experiencia.js"></script>
+</body>
+</html>

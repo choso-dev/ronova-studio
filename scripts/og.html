@@ -1,0 +1,33 @@
+<!doctype html>
+<!-- Portada que sale al compartir el enlace (1200 × 630).
+     Para regenerar img/og.jpg:
+     chromium --headless=new --hide-scrollbars --window-size=1200,630 --screenshot=og.png scripts/og.html
+     y convertir og.png a img/og.jpg. -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: "Cabinet Grotesk"; src: url("../fuentes/cabinet-grotesk-500.woff2") format("woff2"); font-weight: 500; }
+  @font-face { font-family: "Cabinet Grotesk"; src: url("../fuentes/cabinet-grotesk-800.woff2") format("woff2"); font-weight: 800; }
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: #000; }
+  body { position: relative; font-family: "Cabinet Grotesk", sans-serif; color: #fff; }
+  .fondo { position: absolute; inset: 0; }
+  .fondo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.2) brightness(1.05); }
+  .fondo::after { content: ""; position: absolute; inset: 0; background: #6d28d9; mix-blend-mode: multiply; }
+  .banda { position: absolute; inset: auto 0 0 0; height: 150px; background: #000; }
+  .logo { position: absolute; left: 64px; top: 56px; width: 230px; }
+  h1 { position: absolute; left: 64px; top: 190px; margin: 0; font-size: 100px; font-weight: 800; line-height: 0.88; letter-spacing: -0.04em; }
+  .servicios { position: absolute; left: 64px; bottom: 56px; margin: 0; font-size: 30px; font-weight: 500; }
+  .servicios b { color: #8b5cf6; font-weight: 800; }
+  .kana { position: absolute; right: 64px; top: 60px; margin: 0; writing-mode: vertical-rl; font-size: 22px; letter-spacing: 0.35em; }
+</style>
+</head>
+<body>
+  <div class="fondo"><img src="../video/escenas/neon.webp" alt=""></div>
+  <div class="banda"></div>
+  <img class="logo" src="../marca/kit/svg/ronova-horizontal-blanco.svg" alt="">
+  <p class="kana">ロノヴァ・スタジオ</p>
+  <h1>una idea convertida<br>en software.</h1>
+  <p class="servicios">páginas web <b>·</b> verificador de pagos <b>·</b> agentes de IA</p>
+</body>
+</html>

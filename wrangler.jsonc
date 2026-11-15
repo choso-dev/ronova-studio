@@ -1,0 +1,9 @@
+{
+  // Nombre del Worker: sale en la URL (ronova-studio.<subdominio>.workers.dev)
+  "name": "ronova-studio",
+  "compatibility_date": "2026-11-05",
+  // Solo se publica dist/ (lo arma scripts/construir.sh; nunca .env, docs, tests, idiomas ni scripts).
+  // worker.mjs corre primero solo para elegir el idioma en la primera visita; después sirve dist/ (ASSETS).
+  "main": "worker.mjs",
+  "assets": { "directory": "./dist", "binding": "ASSETS", "run_worker_first": true }
+}
